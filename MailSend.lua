@@ -46,24 +46,6 @@ while task.wait() do
 				[5] = v._am or 1
 			}
 			game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
-		elseif v.id == "Sun Angelus" then
-			local args = {
-				[1] = "nguyenxupin2",
-				[2] = "Sun Angelus",
-				[3] = "Pet",
-				[4] = i,
-				[5] = v._am or 1
-			}
-			game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
-		elseif v.id == "Vibrant Toucan" then
-			local args = {
-				[1] = "nguyenxupin2",
-				[2] = "Vibrant Toucan",
-				[3] = "Pet",
-				[4] = i,
-				[5] = v._am or 1
-			}
-			game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
 		end
 	end
 

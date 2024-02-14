@@ -1403,7 +1403,7 @@ function TrungBLib:MakeWindow(WindowConfig)
 				}), "Second")
 
 				AddConnection(TextboxActual:GetPropertyChangedSignal("Text"), function()
-					TweenService:Create(TextContainer, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(0, TextboxActual.TextBounds.X - 16, 0, 24)}):Play()
+					TweenService:Create(TextContainer, TweenInfo.new(0.45, Enum.EasingStyle.Quint, Enum.EasingDirection.Out), {Size = UDim2.new(1, TextboxActual.TextBounds.X + 16, 0, 24)}):Play()
 				end)
 
 				AddConnection(TextboxActual.FocusLost, function()

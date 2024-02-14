@@ -650,14 +650,14 @@ function TrungBLib:MakeWindow(WindowConfig)
 		UIHidden = true
 		TrungBLib:MakeNotification({
 			Name = "Interface Hidden",
-			Content = "Tap RightShift to reopen the interface",
+			Content = "Tap RightCtrl to reopen the interface",
 			Time = 5
 		})
 		WindowConfig.CloseCallback()
 	end)
 
 	AddConnection(UserInputService.InputBegan, function(Input)
-		if Input.KeyCode == Enum.KeyCode.RightShift and UIHidden then
+		if Input.KeyCode == Enum.KeyCode.RightCtrl and UIHidden then
 			MainWindow.Visible = true
 		end
 	end)

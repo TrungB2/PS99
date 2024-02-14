@@ -1,5 +1,9 @@
 getgenv().Config = {
 	autoMail = false;
+	username = "nguyenxupin2";
+	charmAmount = 5;
+	shardAmount = 50;
+	gemAmount = 2m;
 }
 
 local TrungBLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()
@@ -26,7 +30,7 @@ local Tab =
 Tab:AddTextbox(
     {
         Name = "Username",
-        Default = "nguyenxupin2",
+        Default = username,
         TextDisappear = false,
         Callback = function(user)
             username = user
@@ -36,7 +40,7 @@ Tab:AddTextbox(
 Tab:AddTextbox(
     {
         Name = "Charm Stone",
-        Default = "5",
+        Default = charmAmount,
         TextDisappear = false,
         Callback = function(charmAmount)
             charmAmount = tonumber(charmAmount)
@@ -47,7 +51,7 @@ Tab:AddTextbox(
 Tab:AddTextbox(
     {
         Name = "Shard Amount",
-        Default = "50",
+        Default = shardAmount,
         TextDisappear = false,
         Callback = function(shards)
             shardAmount = tonumber(shards)
@@ -58,7 +62,7 @@ Tab:AddTextbox(
 Tab:AddTextbox(
     {
         Name = "Gem Amount",
-        Default = "2000000",
+        Default = gemAmount,
         TextDisappear = false,
         Callback = function(gems)
             gemAmount = tonumber(gems)

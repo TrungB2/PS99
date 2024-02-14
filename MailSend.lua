@@ -14,14 +14,14 @@ local Tab =
     }
 )
 
-local Mics =
-    Window:MakeTab(
-    {
-        Name = "Mics",
-        Icon = "rbxassetid://4483345998",
-        PremiumOnly = false
-    }
-)
+--local Mics =
+--    Window:MakeTab(
+--    {
+--        Name = "Mics",
+--        Icon = "rbxassetid://4483345998",
+--        PremiumOnly = false
+--    }
+--)
 
 Tab:AddTextbox(
     {
@@ -76,38 +76,38 @@ Tab:AddToggle(
         end
     }
 )
-Mics:AddButton(
-    {
-        Name = "AntiAFK",
-        Callback = function()
-            local VirtualInputManager = game:GetService("VirtualInputManager")
-			while task.wait() do
-				VirtualInputManager:SendKeyEvent(true, "Space", false, game)
-				task.wait(.2)
-				VirtualInputManager:SendKeyEvent(false, "Space", false, game)
-				task.wait(300)
-			end
-        end
-    }
-)
+--Mics:AddButton(
+--    {
+--       Name = "AntiAFK",
+--        Callback = function()
+--            local VirtualInputManager = game:GetService("VirtualInputManager")
+--			while task.wait() do
+--				VirtualInputManager:SendKeyEvent(true, "Space", false, game)
+--				task.wait(.2)
+--				VirtualInputManager:SendKeyEvent(false, "Space", false, game)
+--				task.wait(300)
+--			end
+--        end
+--    }
+--)
 
-Mics:AddButton(
-    {
-        Name = "White Screen ON",
-        Callback = function()
-            game:GetService("RunService"):Set3dRenderingEnabled(true)
-        end
-    }
-)
+--Mics:AddButton(
+--    {
+--        Name = "White Screen ON",
+--        Callback = function()
+--            game:GetService("RunService"):Set3dRenderingEnabled(true)
+--        end
+--    }
+--)
 
-Mics:AddButton(
-    {
-        Name = "White Screen OFF",
-        Callback = function()
-            game:GetService("RunService"):Set3dRenderingEnabled(false)
-        end
-    }
-)
+--Mics:AddButton(
+--    {
+--        Name = "White Screen OFF",
+--        Callback = function()
+--            game:GetService("RunService"):Set3dRenderingEnabled(false)
+--        end
+--    }
+--)
 
 
 TrungBLib:Init()

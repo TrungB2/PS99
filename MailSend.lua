@@ -1,5 +1,5 @@
 getgenv().Config = {
-	autoMail = true;
+	autoMail = false;
 }
 
 local TrungBLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()
@@ -69,7 +69,7 @@ Tab:AddTextbox(
 Tab:AddToggle(
     {
         Name = "Auto Mail (Huge, Shard, Gems)",
-        Default = true,
+        Default = false,
         Callback = function(v)
             Config.autoMail = v
             spawn(autoMail)

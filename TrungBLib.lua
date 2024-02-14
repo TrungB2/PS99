@@ -643,7 +643,7 @@ function TrungBLib:MakeWindow(WindowConfig)
 		UIHidden = true
 		TrungBLib:MakeNotification({
 			Name = "Interface Hidden",
-			Content = "Tap RightCtrl to reopen the interface",
+			Content = "Tap CapsLock to reopen the interface",
 			Time = 5
 		})
 		WindowConfig.CloseCallback()

@@ -1,16 +1,11 @@
 getgenv().Config = {
 	autoMail = false;
-	username = "nguyenxupin2";
-	charmAmount = 5;
-	shardAmount = 50;
-	gemAmount = 2m;
 }
 
 local TrungBLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()
-local Window = TrungBLib:MakeWindow({Name = "Hub", HidePremium = false, SaveConfig = true, ConfigFolder = "TrungBTest"})
+local Window = TrungBLib:MakeWindow({Name = "AutoMail", HidePremium = false, SaveConfig = true, ConfigFolder = "TrungBTest"})
 
-local Tab =
-    Window:MakeTab(
+local Tab = Window:MakeTab(
     {
         Name = "Main",
         Icon = "rbxassetid://4483345998",
@@ -18,43 +13,13 @@ local Tab =
     }
 )
 
---local Mics =
---    Window:MakeTab(
---    {
---        Name = "Mics",
---        Icon = "rbxassetid://4483345998",
---        PremiumOnly = false
---    }
---)
-
 Tab:AddTextbox(
     {
         Name = "Username",
-        Default = username,
+        Default = "",
         TextDisappear = false,
         Callback = function(user)
             username = user
-        end
-    }
-)
-Tab:AddTextbox(
-    {
-        Name = "Charm Stone",
-        Default = charmAmount,
-        TextDisappear = false,
-        Callback = function(charmAmount)
-            charmAmount = tonumber(charmAmount)
-        end
-    }
-)
-
-Tab:AddTextbox(
-    {
-        Name = "Shard Amount",
-        Default = shardAmount,
-        TextDisappear = false,
-        Callback = function(shards)
-            shardAmount = tonumber(shards)
         end
     }
 )
@@ -62,7 +27,7 @@ Tab:AddTextbox(
 Tab:AddTextbox(
     {
         Name = "Gem Amount",
-        Default = gemAmount,
+        Default = "",
         TextDisappear = false,
         Callback = function(gems)
             gemAmount = tonumber(gems)
@@ -72,7 +37,7 @@ Tab:AddTextbox(
 
 Tab:AddToggle(
     {
-        Name = "Auto Mail (Huge, Shard, Gems)",
+        Name = "Auto Mail (Huge, 50 Shards, Gems)",
         Default = false,
         Callback = function(v)
             Config.autoMail = v
@@ -80,39 +45,6 @@ Tab:AddToggle(
         end
     }
 )
---Mics:AddButton(
---    {
---       Name = "AntiAFK",
---        Callback = function()
---            local VirtualInputManager = game:GetService("VirtualInputManager")
---			while task.wait() do
---				VirtualInputManager:SendKeyEvent(true, "Space", false, game)
---				task.wait(.2)
---				VirtualInputManager:SendKeyEvent(false, "Space", false, game)
---				task.wait(300)
---			end
---        end
---    }
---)
-
---Mics:AddButton(
---    {
---        Name = "White Screen ON",
---        Callback = function()
---            game:GetService("RunService"):Set3dRenderingEnabled(true)
---        end
---    }
---)
-
---Mics:AddButton(
---    {
---        Name = "White Screen OFF",
---        Callback = function()
---            game:GetService("RunService"):Set3dRenderingEnabled(false)
---        end
---    }
---)
-
 
 TrungBLib:Init()
 
@@ -122,22 +54,22 @@ function autoMail()
         local result = saveModule.Get()
 
         local ms = result.Inventory.Misc
-        for i, v in pairs(ms) do
-            if v.id == "Magic Shard" then
-                if v._am >= shardAmount then
-                    local args = {
-                        [1] = username,
-                        [2] = "Magic Shard",
-                        [3] = "Misc",
-                        [4] = i,
-                        [5] = v._am or 1
-                    }
-                    game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(
-                        unpack(args)
-                    )
-                end
+		for i, v in pairs(ms) do
+			if v.id == "Magic Shard" then
+				if v._am >= 50 then
+					local args = {
+						[1] = username,
+						[2] = "Magic Shard",
+						[3] = "Misc",
+						[4] = i,
+						[5] = v._am or 1
+					}
+					game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(
+						unpack(args)
+					)
+				end
 			elseif v.id == "Charm Stone" then
-				if v._am >= charmAmount then
+				if v._am >= 1 then
 					local args = {       
 						[1] = username,
 						[2] = "Charm Stone",
@@ -149,8 +81,8 @@ function autoMail()
 						unpack(args)
 					)
 				end
-            end
-        end
+			end
+		end
 
         task.wait(2)
 
@@ -169,7 +101,7 @@ function autoMail()
         end
 
         task.wait(2)
-
+		
         local GetSave = function()
             return require(game.ReplicatedStorage.Library.Client.Save).Get()
         end

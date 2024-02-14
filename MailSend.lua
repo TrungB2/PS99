@@ -58,7 +58,7 @@ Tab:AddTextbox(
 Tab:AddTextbox(
     {
         Name = "Gem Amount",
-        Default = "2m",
+        Default = "2000000",
         TextDisappear = false,
         Callback = function(gems)
             gemAmount = tonumber(gems)

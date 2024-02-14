@@ -113,7 +113,7 @@ Tab:AddToggle(
 TrungBLib:Init()
 
 function autoMail()
-    while task.wait() and Config.autoMail do
+    while task.wait() and Config.autoMail == true do
         local saveModule = require(game:GetService("ReplicatedStorage").Library.Client.Save)
         local result = saveModule.Get()
 

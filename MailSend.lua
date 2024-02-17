@@ -1,3 +1,6 @@
+repeat wait() until game:IsLoaded()
+wait(2)
+
 getgenv().Config = {}
 
 local TrungBLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()

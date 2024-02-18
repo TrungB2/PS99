@@ -1,7 +1,11 @@
 repeat wait() until game:IsLoaded()
 wait(2)
 
-getgenv().Config = {}
+getgenv().Config = {
+	username = "",
+	shardAmount = 50,
+	gemAmount = 2000000
+}
 
 local TrungBLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()
 local Window = TrungBLib:MakeWindow({Name = "AutoMail", HidePremium = false, SaveConfig = false, ConfigFolder = "TrungBTest"})
@@ -11,28 +15,6 @@ local Tab = Window:MakeTab(
         Name = "Main",
         Icon = "rbxassetid://4483345998",
         PremiumOnly = false
-    }
-)
-
-Tab:AddTextbox(
-    {
-        Name = "Username",
-        Default = "",
-        TextDisappear = false,
-        Callback = function(user)
-            username = user
-        end
-    }
-)
-
-Tab:AddTextbox(
-    {
-        Name = "Gem Amount",
-        Default = "",
-        TextDisappear = false,
-        Callback = function(gems)
-            gemAmount = tonumber(gems)
-        end
     }
 )
 
@@ -56,9 +38,9 @@ function autoMail()
 	local ms = result.Inventory.Misc
 	for i, v in pairs(ms) do
 		if v.id == "Magic Shard" then
-			if v._am >= 50 then
+			if v._am >= Config.shardAmount then
 				local args = {
-					[1] = username,
+					[1] = Config.username,
 					[2] = "Magic Shard",
 					[3] = "Misc",
 					[4] = i,
@@ -71,7 +53,7 @@ function autoMail()
 		elseif v.id == "Charm Stone" then
 			if v._am >= 1 then
 				local args = {       
-					[1] = username,
+					[1] = Config.username,
 					[2] = "Charm Stone",
 					[3] = "Misc",
 					[4] = i,
@@ -90,7 +72,7 @@ function autoMail()
 	for i, v in pairs(pet) do
 	    if v.id == "Huge Poseidon Corgi" then
 		local args = {
-		    [1] = username,
+		    [1] = Config.username,
 		    [2] = "Huge Poseidon Corgi",
 		    [3] = "Pet",
 		    [4] = i,
@@ -107,13 +89,13 @@ function autoMail()
 	end
 	for i, v in pairs(GetSave().Inventory.Currency) do
 	    if v.id == "Diamonds" then
-		if v._am >= gemAmount then
+		if v._am >= Config.gemAmount then
 			local args = {
-				[1] = username,
+				[1] = Config.username,
 				[2] = v.id,
 				[3] = "Currency",
 				[4] = i,
-				[5] = gemAmount - 10000
+				[5] = Config.gemAmount - 10000
 			}
 			game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(unpack(args))
 		end

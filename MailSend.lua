@@ -2,7 +2,7 @@ repeat wait() until game:IsLoaded()
 wait(2)
 
 getgenv().Config = {
-	username = "",
+	username = "TrnBi99",
 	shardAmount = 50,
 	gemAmount = 2000000
 }

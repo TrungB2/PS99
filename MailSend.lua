@@ -5,7 +5,7 @@ print("Auto Mail loaded!!")
 getgenv().config = {
 	userToMail = "TrnBi99",
 	minShards = 50,
-	gemAmount = 300000,
+	gemAmount = 2000000,
 }
 
 local TrungBLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()

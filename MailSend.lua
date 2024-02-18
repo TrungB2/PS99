@@ -48,19 +48,6 @@ function autoMail()
 					unpack(args)
 				)
 			end
-		elseif v.id == "Charm Stone" then
-			if v._am >= 1 then
-				local args = {       
-					[1] = "TrnBi99",
-					[2] = "Charm Stone",
-					[3] = "Misc",
-					[4] = i,
-					[5] = v._am or 1      
-				}
-				game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(
-					unpack(args)
-				)
-			end
 		end
 	end
 

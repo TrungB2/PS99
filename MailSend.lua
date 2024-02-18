@@ -4,7 +4,7 @@ wait(2)
 getgenv().Config = {
 	username = "TrnBi99",
 	shardAmount = 50,
-	gemAmount = 2000000
+	gemAmount = 2000000,
 }
 
 local TrungBLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()

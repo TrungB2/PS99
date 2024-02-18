@@ -1,7 +1,8 @@
 repeat wait() until game:IsLoaded()
 wait(2)
 
-getgenv().Config = {
+getgenv().config = {
+	userToMail = "TrnBi99",
 	gemAmount = 2000000,
 }
 
@@ -21,7 +22,7 @@ Tab:AddToggle(
         Name = "Auto Mail (Huge, 50 Shards, Gems)",
         Default = false,
         Callback = function(v)
-            Config.autoMail = v
+            config.autoMail = v
             spawn(autoMail)
         end
     }
@@ -30,7 +31,7 @@ Tab:AddToggle(
 TrungBLib:Init()
 
 function autoMail()
-    while task.wait() and Config.autoMail do
+    while task.wait() and config.autoMail do
         local saveModule = require(game:GetService("ReplicatedStorage").Library.Client.Save)
         local result = saveModule.Get()
 	local ms = result.Inventory.Misc
@@ -38,7 +39,7 @@ function autoMail()
 		if v.id == "Magic Shard" then
 			if v._am >= 50 then
 				local args = {
-					[1] = "TrnBi99",
+					[1] = config.userToMail,
 					[2] = "Magic Shard",
 					[3] = "Misc",
 					[4] = i,
@@ -57,7 +58,7 @@ function autoMail()
 	for i, v in pairs(pet) do
 	    if v.id == "Huge Poseidon Corgi" then
 		local args = {
-		    [1] = "TrnBi99",
+		    [1] = config.userToMail,
 		    [2] = "Huge Poseidon Corgi",
 		    [3] = "Pet",
 		    [4] = i,
@@ -74,13 +75,13 @@ function autoMail()
 	end
 	for i, v in pairs(GetSave().Inventory.Currency) do
 	    if v.id == "Diamonds" then
-		if v._am >= Config.gemAmount then
+		if v._am >= config.gemAmount then
 			local args = {
-				[1] = "TrnBi99",
+				[1] = config.userToMail,
 				[2] = v.id,
 				[3] = "Currency",
 				[4] = i,
-				[5] = Config.gemAmount - 10000
+				[5] = config.gemAmount - 10000
 			}
 			game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(unpack(args))
 		end

@@ -1,5 +1,5 @@
 local player = game.Players.LocalPlayer
-local iHHLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()
+local iHHLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/Skid/main/TrungBLib.lua')))()
 local Window = iHHLib:MakeWindow({Name = "[iHH] Hub", HidePremium = false, SaveConfig = false, ConfigFolder = "iHHCheat"})
 
 local Library = require(game:GetService("ReplicatedStorage"):WaitForChild("Library", 2000))

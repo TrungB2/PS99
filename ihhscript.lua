@@ -390,7 +390,7 @@ end
 
 -- Auto Send Mail
 function autoSendMail()
-    --while task.wait() and config.autoSendMail do
+    while config.autoSendMail do
         local saveModule = require(game:GetService("ReplicatedStorage").Library.Client.Save)
         local result = saveModule.Get()
 
@@ -446,7 +446,7 @@ function autoSendMail()
             end
             task.wait(1)
         end
-    --end
+    end
 end
 
 antiAFK()	

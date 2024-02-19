@@ -193,7 +193,7 @@ Mics:AddButton(
     {
         Name = "Reduce CPU",
         Callback = function()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/PS99/main/lowCPU.lua"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/main/lowCPU.lua"))()
         end
     }
 )

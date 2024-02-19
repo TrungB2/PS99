@@ -1,5 +1,5 @@
 repeat wait() until game:IsLoaded()
-wait(3)
+wait(2)
 
 getgenv().Config = {
 	userToMail = "TrnBi99", -- Đổi thành tên của bạn

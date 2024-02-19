@@ -8,7 +8,7 @@ getgenv().config = {
 	gemAmount = 2000000,
 }
 
-local TrungBLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()
+local TrungBLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/Skid/main/TrungBLib.lua')))()
 local Window = TrungBLib:MakeWindow({Name = "AutoMail", HidePremium = false, SaveConfig = false, ConfigFolder = "TrungBTest"})
 
 local Tab = Window:MakeTab(

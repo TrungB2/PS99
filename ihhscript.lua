@@ -228,7 +228,6 @@ Mics:AddButton(
         end
     }
 )
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-180.852783203125, 117.92350006103516, 5175.45703125)
 
 iHHLib:Init()
 

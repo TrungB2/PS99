@@ -1,88 +1,19 @@
 local player = game.Players.LocalPlayer
-local iHHLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/Skid/main/TrungBLib.lua')))()
-local Window = iHHLib:MakeWindow({Name = "[iHH] Hub", HidePremium = false, SaveConfig = false, ConfigFolder = "iHHCheat"})
-
+local iHHLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()
+local Window = iHHLib:MakeWindow({Name = "[iHH] Hub", HidePremium = false, Saveconfig = false, configFolder = "iHHCheat"})
 local Library = require(game:GetService("ReplicatedStorage"):WaitForChild("Library", 2000))
-------------- Farming tab
-local Farm = Window:MakeTab(
+
+------------- Info tab
+local Info = Window:MakeTab(
     {
-        Name = "Farming",
+        Name = "INFOMATION",
         Icon = "rbxassetid://4483345998",
         PremiumOnly = false
     }
 )
 
-local Section = Farm:AddSection(
-	{
-		Name = "Farming method"
-	}
-)
-Farm:AddToggle(
-    {
-        Name = "Auto Collect Bag",
-        Default = false,
-        Callback = function(v)
-            Config.autoCollectBag = v
-            spawn(autoCollectBag)
-        end
-    }
-)
+Info:AddParagraph("Thông tin về script", "Có cái choá gì mà xem, dùng đi rồi biết!! :) Nếu không biết thì dùng đi là biết xD")
 
-local Section = Farm:AddSection(
-	{
-		Name = "Open Gift Bag method"
-	}
-)
-
-Farm:AddToggle(
-    {
-        Name = "Auto Claim Reward",
-        Default = false,
-        Callback = function(v)
-            Config.autoClaimReward = v
-            spawn(autoClaimReward)
-        end
-    }
-)
-
-Farm:AddToggle(
-    {
-        Name = "Auto Gift Bag",
-        Default = false,
-        Callback = function(v)
-            Config.autoGiftBag = v
-            spawn(autoGiftBag)
-        end
-    }
-)
-
-Farm:AddToggle(
-    {
-        Name = "Auto Large Gift Bag",
-        Default = false,
-        Callback = function(v)
-            Config.autoLargeGiftBag = v
-            spawn(autoLargeGiftBag)
-        end
-    }
-)
-
-local Section = Farm:AddSection(
-	{
-		Name = "Open Bundle Gift Bag"
-	}
-)
-
-Farm:AddToggle(
-    {
-        Name = "Auto Bundle Gift Bag",
-        Default = false,
-        Callback = function(v)
-            Config.autoBundleGiftBag = v
-            spawn(autoBundleGiftBag)
-        end
-    }
-)
 ------------- Fishing tab
 local Fishing = Window:MakeTab(
     {
@@ -102,7 +33,7 @@ Fishing:AddToggle(
         Name = "Auto Hidden Present",
         Default = false,
         Callback = function(v)
-            Config.autoHiddenPresent = v
+            config.autoHiddenPresent = v
             spawn(autoHiddenPresent)
         end
     }
@@ -112,13 +43,12 @@ local Section = Fishing:AddSection(
 		Name = "Auto Advanced Fishing"
 	}
 )
-
 Fishing:AddToggle(
     {
         Name = "Auto Fish (Advanced)",
         Default = false,
         Callback = function(v)
-            Config.autoFishA = v
+            config.autoFishA = v
             spawn(autoFishA)
         end
     }
@@ -127,15 +57,87 @@ Fishing:AddButton(
     {
         Name = "TP Fishing Area",
         Callback = function()
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame =
-                CFrame.new(-180.852783203125, 117.92350006103516, 5175.45703125)
+			spawn(teleFishArea)
+        end
+    }
+)
+
+------------- Farming tab
+local Farm = Window:MakeTab(
+    {
+        Name = "Farming",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    }
+)
+local Section = Farm:AddSection(
+	{
+		Name = "Farming method"
+	}
+)
+Farm:AddToggle(
+    {
+        Name = "Auto Collect Bag",
+        Default = false,
+        Callback = function(v)
+            config.autoCollectBag = v
+            spawn(autoCollectBag)
+        end
+    }
+)
+local Section = Farm:AddSection(
+	{
+		Name = "Open Gift Bag method"
+	}
+)
+Farm:AddToggle(
+    {
+        Name = "Auto Claim Reward",
+        Default = false,
+        Callback = function(v)
+            config.autoClaimReward = v
+            spawn(autoClaimReward)
+        end
+    }
+)
+Farm:AddToggle(
+    {
+        Name = "Auto Gift Bag",
+        Default = false,
+        Callback = function(v)
+            config.autoGiftBag = v
+            spawn(autoGiftBag)
+        end
+    }
+)
+Farm:AddToggle(
+    {
+        Name = "Auto Large Gift Bag",
+        Default = false,
+        Callback = function(v)
+            config.autoLargeGiftBag = v
+            spawn(autoLargeGiftBag)
+        end
+    }
+)
+local Section = Farm:AddSection(
+	{
+		Name = "Open Bundle Gift Bag"
+	}
+)
+Farm:AddToggle(
+    {
+        Name = "Auto Bundle Gift Bag",
+        Default = false,
+        Callback = function(v)
+            config.autoBundleGiftBag = v
+            spawn(autoBundleGiftBag)
         end
     }
 )
 
 ------------- Mail tab
-local Mail =
-    Window:MakeTab(
+local Mail = Window:MakeTab(
     {
         Name = "Mail",
         Icon = "rbxassetid://4483345998",
@@ -153,7 +155,7 @@ Mail:AddToggle(
         Name = "Auto Claim Mail",
         Default = false,
         Callback = function(v)
-            Config.autoClaimMail = v
+            config.autoClaimMail = v
             spawn(autoClaimMail)
         end
     }
@@ -164,12 +166,10 @@ local Section = Mail:AddSection(
 		Name = "Auto Send Mail"
 	}
 )
-Mail:AddToggle(
+Mail:AddButton(
     {
         Name = "Auto Send Mail (Huge, Shard, Gems)",
-        Default = false,
-        Callback = function(v)
-            Config.autoSendMail = v
+        Callback = function()
             spawn(autoSendMail)
         end
     }
@@ -193,7 +193,7 @@ Mics:AddButton(
     {
         Name = "Reduce CPU",
         Callback = function()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/main/lowCPU.lua"))()
+			loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/PS99/main/lowCPU.lua"))()
         end
     }
 )
@@ -214,11 +214,32 @@ Mics:AddButton(
     }
 )
 
+local Section = Mics:AddSection(
+	{
+		Name = "Destroy the UI"
+	}
+)
+Mics:AddButton(
+    {
+        Name = "DestroyUI",
+        Callback = function()
+            iHHLib:Destroy()
+        end
+    }
+)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-180.852783203125, 117.92350006103516, 5175.45703125)
+
 iHHLib:Init()
+
+-- Tele to fish area
+function teleFishArea()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-180.852783203125, 117.92350006103516, 5175.45703125)
+	print("Tele to fish area!!")
+end
 
 -- Auto Gift Bag
 function autoGiftBag()
-	while task.wait() and Config.autoGiftBag do
+	while task.wait() and config.autoGiftBag do
 		local args = {
 			[1] = "Gift Bag"
 		}
@@ -228,9 +249,8 @@ function autoGiftBag()
 end
 
 -- Auto Large Gift Bag
-
 function autoLargeGiftBag()
-	while task.wait() and Config.autoLargeGiftBag do
+	while task.wait() and config.autoLargeGiftBag do
 		local args = {
 			[1] = "Large Gift Bag"
 		}
@@ -239,9 +259,8 @@ function autoLargeGiftBag()
 end
 
 -- Auto Bundle Gift Bag
-
 function autoBundleGiftBag()
-	while task.wait() and Config.autoBundleGiftBag do
+	while task.wait() and config.autoBundleGiftBag do
 		local args = {
 			[1] = "Large Gift Bag"
 		}
@@ -250,7 +269,7 @@ function autoBundleGiftBag()
 end
 -- Auto Free Gift
 function autoClaimReward()
-    while task.wait() and Config.autoClaimReward do
+    while task.wait() and config.autoClaimReward do
 		for i = 1, 12 do
 			local args = {[1] = i}
 			game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Redeem Free Gift"):InvokeServer(unpack(args))
@@ -261,7 +280,7 @@ end
 
 -- Auto  Collect
 function autoCollectBag()
-    while task.wait() and Config.autoCollectBag do
+    while task.wait() and config.autoCollectBag do
 
         -- Coins
         for i, v in pairs(game.workspace['__THINGS'].Orbs:GetChildren()) do
@@ -286,10 +305,9 @@ function autoCollectBag()
     end	
 end
 
-
 -- Auto Present
 function autoHiddenPresent()
-	while task.wait() and Config.autoHiddenPresent do
+	while task.wait() and config.autoHiddenPresent do
 		local save = require(game:GetService("ReplicatedStorage").Library.Client.Save)
         local result = save.Get()
 		local present = result.HiddenPresents
@@ -316,14 +334,14 @@ end
 
 -- Auto Claim Mail
 function autoClaimMail()
-	while task.wait() and Config.autoClaimMail do
+	while task.wait() and config.autoClaimMail do
 		game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Claim All"):InvokeServer()
 	end
 end
 
 -- Auto Fishing
 function autoFishA()
-    while task.wait() and Config.autoFishA do
+    while task.wait() and config.autoFishA do
         local x = math.random(10, 20)
         local z = math.random(10, 20)
 
@@ -372,7 +390,7 @@ end
 
 -- Auto Send Mail
 function autoSendMail()
-    while task.wait() and Config.autoSendMail do
+    --while task.wait() and config.autoSendMail do
         local saveModule = require(game:GetService("ReplicatedStorage").Library.Client.Save)
         local result = saveModule.Get()
 
@@ -428,7 +446,7 @@ function autoSendMail()
             end
             task.wait(1)
         end
-    end
+    --end
 end
 
-antiAFK()
+antiAFK()	

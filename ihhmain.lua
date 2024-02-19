@@ -7,4 +7,4 @@ getgenv().Config = {
 	gemAmount = 300000, -- Số lượng gem (2000000 = 2m)
 }
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/PS99/main/ihhscript.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/main/ihhscript.lua"))()

@@ -1,7 +1,6 @@
-
 local player = game.Players.LocalPlayer
 local iHHLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/PS99/main/TrungBLib.lua')))()
-local Window = iHHLib:MakeWindow({Name = "[iHH] Hub", HidePremium = false, Saveconfig = false, configFolder = "iHHCheat"})
+local Window = iHHLib:MakeWindow({Name = "[iHH] Hub", HidePremium = false, Saveconfig = true, configFolder = "iHHCheat"})
 local Library = require(game:GetService("ReplicatedStorage"):WaitForChild("Library", 2000))
 
 ------------- Info tab
@@ -14,6 +13,82 @@ local Info = Window:MakeTab(
 )
 
 Info:AddParagraph("Thông tin về script", "Có cái choá gì mà xem, dùng đi rồi biết!! :) Nếu không biết thì dùng đi là biết xD")
+
+------------- Fast tele setup to fishing
+local FastFish = Window:MakeTab(
+    {
+        Name = "Fast Fishing",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    }
+)
+FastFish:AddParagraph("Thông báo nhỏ","Mày chả cần làm cái buồi gì hết, chỉ cần click vào cái nút bên dưới mọi thứ sẽ tự động cài đặt câu cá cho mày :)")
+FastFish:AddButton(
+    {
+        Name = "Tele, Auto Present, Auto Fish, Move!",
+        Callback = function()
+			spawn(fastTeleFishArea)
+        end
+    }
+)
+------------- Farming tab
+local Farm = Window:MakeTab(
+    {
+        Name = "Farming",
+        Icon = "rbxassetid://4483345998",
+        PremiumOnly = false
+    }
+)
+local Section = Farm:AddSection(
+	{
+		Name = "Open Bundle Gift Bag"
+	}
+)
+Farm:AddDropdown(
+    {
+        Name = "Pick Bundle, Charm Stone, Gift",
+        Default = "Charm Stone",
+		Options = {"Charm Stone", "Enchant Bundle", "Flag Bundle", "Potion Bundle", "Toy Bundle", "Gift Bag", "Large Gift Bag"},
+        Callback = function(v)
+            config.bundleGiftBag = v
+        end
+    }
+)
+Farm:AddToggle(
+    {
+        Name = "Auto Bundle",
+		Default = false,
+        Callback = function(v)
+			config.autoBundleGiftBag = v
+            spawn(autoBundle)
+        end
+    }
+)
+local Section = Farm:AddSection(
+	{
+		Name = "Farming method"
+	}
+)
+Farm:AddToggle(
+    {
+        Name = "Auto Claim Reward",
+        Default = false,
+        Callback = function(v)
+            config.autoClaimReward = v
+            spawn(autoClaimReward)
+        end
+    }
+)
+Farm:AddToggle(
+    {
+        Name = "Auto Collect Bag",
+        Default = false,
+        Callback = function(v)
+            config.autoCollectBag = v
+            spawn(autoCollectBag)
+        end
+    }
+)
 
 ------------- Fishing tab
 local Fishing = Window:MakeTab(
@@ -29,7 +104,7 @@ local Section = Fishing:AddSection(
 		Name = "Auto Claim Hidden Present"
 	}
 )
-Fishing:AddToggle(
+local present = Fishing:AddToggle(
     {
         Name = "Auto Hidden Present",
         Default = false,
@@ -44,95 +119,22 @@ local Section = Fishing:AddSection(
 		Name = "Auto Advanced Fishing"
 	}
 )
-Fishing:AddToggle(
+local fish = Fishing:AddToggle(
     {
         Name = "Auto Fish (Advanced)",
         Default = false,
         Callback = function(v)
-            config.autoFishA = v
-            spawn(autoFishA)
+            config.autoFish = v
+			spawn(autoFish)
         end
     }
 )
+
 Fishing:AddButton(
     {
         Name = "TP Fishing Area",
         Callback = function()
 			spawn(teleFishArea)
-        end
-    }
-)
-
-------------- Farming tab
-local Farm = Window:MakeTab(
-    {
-        Name = "Farming",
-        Icon = "rbxassetid://4483345998",
-        PremiumOnly = false
-    }
-)
-local Section = Farm:AddSection(
-	{
-		Name = "Farming method"
-	}
-)
-Farm:AddToggle(
-    {
-        Name = "Auto Collect Bag",
-        Default = false,
-        Callback = function(v)
-            config.autoCollectBag = v
-            spawn(autoCollectBag)
-        end
-    }
-)
-local Section = Farm:AddSection(
-	{
-		Name = "Open Gift Bag method"
-	}
-)
-Farm:AddToggle(
-    {
-        Name = "Auto Claim Reward",
-        Default = false,
-        Callback = function(v)
-            config.autoClaimReward = v
-            spawn(autoClaimReward)
-        end
-    }
-)
-Farm:AddToggle(
-    {
-        Name = "Auto Gift Bag",
-        Default = false,
-        Callback = function(v)
-            config.autoGiftBag = v
-            spawn(autoGiftBag)
-        end
-    }
-)
-Farm:AddToggle(
-    {
-        Name = "Auto Large Gift Bag",
-        Default = false,
-        Callback = function(v)
-            config.autoLargeGiftBag = v
-            spawn(autoLargeGiftBag)
-        end
-    }
-)
-local Section = Farm:AddSection(
-	{
-		Name = "Open Bundle Gift Bag"
-	}
-)
-Farm:AddToggle(
-    {
-        Name = "Auto Bundle Gift Bag",
-        Default = false,
-        Callback = function(v)
-            config.autoBundleGiftBag = v
-            spawn(autoBundleGiftBag)
         end
     }
 )
@@ -194,7 +196,7 @@ Mics:AddButton(
     {
         Name = "Reduce CPU",
         Callback = function()
-			loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/PS99/main/lowCPU.lua"))()
+			spawn(lowCPU)
         end
     }
 )
@@ -230,41 +232,36 @@ Mics:AddButton(
 )
 
 iHHLib:Init()
+-- Low CPU
+function lowCPU()
+	loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/PS99/main/lowCPU.lua"))()
+end
+
+-- Fast tele fishing
+function fastTeleFishArea()
+	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-180.852783203125, 117.92350006103516, 5175.45703125)
+	wait(3)
+	present:Set(true)
+	fish:Set(true)
+	lowCPU()
+	wait(6)
+	moveToFishingDerec()
+end
 
 -- Tele to fish area
 function teleFishArea()
 	game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-180.852783203125, 117.92350006103516, 5175.45703125)
-	print("Tele to fish area!!")
 end
 
--- Auto Gift Bag
-function autoGiftBag()
-	while task.wait() and config.autoGiftBag do
-		local args = {
-			[1] = "Gift Bag"
-		}
-		game:GetService("ReplicatedStorage").Network.GiftBag_Open:InvokeServer(unpack(args))
-
-	end
-end
-
--- Auto Large Gift Bag
-function autoLargeGiftBag()
-	while task.wait() and config.autoLargeGiftBag do
-		local args = {
-			[1] = "Large Gift Bag"
-		}
-		game:GetService("ReplicatedStorage").Network.GiftBag_Open:InvokeServer(unpack(args))
-	end
+function moveToFishingDerec()
+	game.Players.LocalPlayer.Character.Humanoid:MoveTo(Vector3.new(1449.8734130859375, 66.07669830322266, -4451.63720703125))
+	print("Move to derection!!")
 end
 
 -- Auto Bundle Gift Bag
-function autoBundleGiftBag()
+function autoBundle()
 	while task.wait() and config.autoBundleGiftBag do
-		local args = {
-			[1] = "Large Gift Bag"
-		}
-		game:GetService("ReplicatedStorage").Network.GiftBag_Open:InvokeServer(unpack(args))
+		game:GetService("ReplicatedStorage").Network.GiftBag_Open:InvokeServer(unpack({[1] = config.bundleGiftBag}))
 	end
 end
 -- Auto Free Gift
@@ -340,8 +337,8 @@ function autoClaimMail()
 end
 
 -- Auto Fishing
-function autoFishA()
-    while task.wait() and config.autoFishA do
+function autoFish()
+    while task.wait() and config.autoFish do
         local x = math.random(10, 20)
         local z = math.random(10, 20)
 
@@ -390,63 +387,59 @@ end
 
 -- Auto Send Mail
 function autoSendMail()
-    --while config.autoSendMail do
-        local saveModule = require(game:GetService("ReplicatedStorage").Library.Client.Save)
-        local result = saveModule.Get()
-
-        local ms = result.Inventory.Misc
-        for i, v in pairs(ms) do
-            if v.id == "Magic Shard" then
-                if v._am >= config.minShards then
-                    local args = {
-                        [1] = config.userToMail,
-                        [2] = "Magic Shard",
-                        [3] = "Misc",
-                        [4] = i,
-                        [5] = v._am or 1
-                    }
-                    game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
-                end
-            end
-        end
-
-        task.wait(2)
-
-        local pet = result.Inventory.Pet
-        for i, v in pairs(pet) do
-            if v.id == "Huge Poseidon Corgi" then
-                local args = {
-                    [1] = config.userToMail,
-                    [2] = "Huge Poseidon Corgi",
-                    [3] = "Pet",
-                    [4] = i,
-                    [5] = v._am or 1
-                }
-                game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
-            end
-        end
-
-        task.wait(2)
-
-        local GetSave = function()
-            return require(game.ReplicatedStorage.Library.Client.Save).Get()
-        end
-        for i, v in pairs(GetSave().Inventory.Currency) do
-            if v.id == "Diamonds" then
-                if v._am >= config.gemAmount then
-                    local args = {
-                        [1] = config.userToMail,
-                        [2] = v.id,
-                        [3] = "Currency",
-                        [4] = i,
-                        [5] = v._am - 60000
-                    }
-                    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(unpack(args))
-                end
-            end
-            task.wait(1)
-        end
-    --end
+	local saveModule = require(game:GetService("ReplicatedStorage").Library.Client.Save)
+	local result = saveModule.Get()
+	
+	local ms = result.Inventory.Misc
+	for i, v in pairs(ms) do
+	    if v.id == "Magic Shard" then
+		if v._am >= config.minShards then
+		    local args = {
+			[1] = config.userToMail,
+			[2] = "Magic Shard",
+			[3] = "Misc",
+			[4] = i,
+			[5] = v._am or 1
+		    }
+		    game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+		end
+	    end
+	end
+	
+	task.wait(2)
+	
+	local pet = result.Inventory.Pet
+	for i, v in pairs(pet) do
+	    if v.id == "Huge Poseidon Corgi" then
+		local args = {
+		    [1] = config.userToMail,
+		    [2] = "Huge Poseidon Corgi",
+		    [3] = "Pet",
+		    [4] = i,
+		    [5] = v._am or 1
+		}
+		game:GetService("ReplicatedStorage").Network:FindFirstChild("Mailbox: Send"):InvokeServer(unpack(args))
+	    end
+	end
+	
+	task.wait(2)
+	
+	local GetSave = require(game:GetService("ReplicatedStorage").Library.Client.Save).Get()
+	for i, v in pairs(GetSave().Inventory.Currency) do
+	    if v.id == "Diamonds" then
+		if v._am >= config.gemAmount then
+		    local args = {
+			[1] = config.userToMail,
+			[2] = v.id,
+			[3] = "Currency",
+			[4] = i,
+			[5] = v._am - 60000
+		    }
+		    game:GetService("ReplicatedStorage"):WaitForChild("Network"):WaitForChild("Mailbox: Send"):InvokeServer(unpack(args))
+		end
+	    end
+	    task.wait(1)
+	end
 end
 
-antiAFK()	
+antiAFK()

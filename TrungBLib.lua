@@ -98,7 +98,8 @@ local function MakeDraggable(DragPoint, Main)
 	pcall(function()
 		local Dragging, DragInput, MousePos, FramePos = false
 		AddConnection(DragPoint.InputBegan, function(Input)
-			if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+			--if Input.UserInputType == Enum.UserInputType.MouseButton1 then
+			if Input.UserInputType == Enum.UserInputType.Touch then
 				Dragging = true
 				MousePos = Input.Position
 				FramePos = Main.Position

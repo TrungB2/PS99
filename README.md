@@ -1,3 +1,3 @@
 ```Lua
-loadstring(game:HttpGet('https://www.ditmemay.com/skid/main/script.lua'))()
+loadstring(game:HttpGet('https://raw.githubusercontent.com/TrungB2/Skid/main/StillSkid-ForReal/test.lua'))()
 ```

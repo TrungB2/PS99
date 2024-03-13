@@ -463,7 +463,7 @@ end
 
 function TrungBLib:MakeWindow(WindowConfig)
 	local FirstTab = true
-	local Minimized = false
+	local Minimized = true -- set false as default
 	local Loaded = false
 	local UIHidden = false
 

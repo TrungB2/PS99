@@ -10,7 +10,6 @@ repeat
     task.wait(1)
 until game:GetService("Players").LocalPlayer and game:GetService("Players").LocalPlayer.Character and game:GetService("Players").LocalPlayer.Character.HumanoidRootPart
 
-
 if game.PlaceId == 8737899170 then
     repeat
         task.wait(1)
@@ -25,6 +24,4 @@ repeat
     task.wait(1)
 until game:GetService("Workspace").__THINGS and game:GetService("Workspace").__DEBRIS
 
-task.wait(5)
-
-print("[CLIENT] Loaded Game")
+print("[iHH] Game Loaded")

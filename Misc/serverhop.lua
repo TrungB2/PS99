@@ -1,8 +1,8 @@
 local gameId = game.PlaceId
 
 local function getServer()
-    local servers = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. tostring(gameId) .. '/servers/Public?sortOrder=Asc&limit=50')).data
-    local server = servers[Random.new():NextInteger(1, 50)]
+    local servers = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. tostring(gameId) .. '/servers/Public?sortOrder=Asc&limit=70')).data
+    local server = servers[Random.new():NextInteger(1, 70)]
     if server then
         return server
     else

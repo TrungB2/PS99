@@ -2,24 +2,6 @@ repeat task.wait() until game:IsLoaded()
 local UserInputService = game:GetService("UserInputService")
 local RunService = game:GetService("RunService")
 
-local WindowFocusReleasedFunction = function()
-    RunService:Set3dRenderingEnabled(false)
-    setfpscap(60)
-    return
-end
-
-local WindowFocusedFunction = function()
-    RunService:Set3dRenderingEnabled(false)
-    setfpscap(60)
-    return
-end
-
-local Initialize = function()
-    UserInputService.WindowFocusReleased:Connect(WindowFocusReleasedFunction)
-    UserInputService.WindowFocused:Connect(WindowFocusedFunction)
-    return
-end
-Initialize()
 UserSettings():GetService("UserGameSettings").MasterVolume = 0
 local decalsyeeted = true
 local g = game

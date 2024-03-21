@@ -91,18 +91,6 @@ local Window = iHHLib:MakeWindow({Name = "[iHH] 🐾 Balloon World 2 🐾", Hide
 
 print('[iHH] Script Loaded!!')
 
-function getInfo(name) return saveMod.Get()[name] end 
-
-function sendNotif(msg)
-	local message = {content = msg}
-	local jsonMessage = HttpService:JSONEncode(message)
-	local success, webMessage = pcall(function() 
-		HttpService:PostAsync(getgenv().config.webhookURL, jsonMessage) 
-	end)
-	if not success then 
-		local response = request({Url = getgenv().config.webhookURL, Method = "POST",Headers = {["Content-Type"] = "application/json"}, Body = jsonMessage})
-	end
-end
 local function checkPlayerMovement()
     while true do
         wait(1)
@@ -306,11 +294,21 @@ local Items = {"Gift Bag"}
 function autoOpen(name)
     Network.GiftBag_Open:InvokeServer(name)
 end
-while wait() do
-    for i,v in pairs(Items) do
-        autoOpen(v)
+local GetSave = function()
+    return require(game.ReplicatedStorage.Library.Client.Save).Get()
+end
+
+for i, v in pairs(GetSave().Inventory.Currency) do
+    if v.id == "Diamonds" then
+        if v._am <= 10000 then
+            while wait() do
+                for i,gift in pairs(Items) do
+                    autoOpen(gift)
+                end
+                break
+            end
+        end
     end
-    break
 end
 
 -- Auto Send Mail
@@ -323,7 +321,7 @@ function autoSendMail()
         print('Checking Mail!')
         for i, v in pairs(ms) do
             if v.id == "Gift Bag" and config.sendGift then
-                if v._am >= 1000 then
+                if v._am >= 200 then
                     local giftbag = {
                         [1] = config.AutoMail.userToMail,
                         [2] = "",
@@ -342,7 +340,7 @@ function autoSendMail()
                 end
             end
             if v.id == "Large Gift Bag" and config.sendGift then
-                if v._am >= 700 then
+                if v._am >= 100 then
                     local largegift = {
                         [1] = config.AutoMail.userToMail,
                         [2] = "",
@@ -421,35 +419,6 @@ function getServer()
 	if server then return server else return getServer() end
 end
 -- Auto Balloon
-
-local startBalloons = #workspace.__THINGS.BalloonGifts:GetChildren()
-function getTotalRAP(num)
-	local suffixes = {"", "k", "m", "b"}
-	local suffixInd = 1
-	while num >= 1000 and suffixInd < #suffixes do
-		num = num / 1000
-		suffixInd = suffixInd + 1
-	end
-	local formattedNum
-	if num % 1 == 0 then
-		formattedNum = string.format("%d", num)
-	else
-		formattedNum = string.format("%.1f", num):gsub("%.?0+$", "")
-	end
-	return formattedNum .. suffixes[suffixInd]
-end
-
-local startGifts = 0
-local startLarge = 0
-for i,v in pairs(getInfo("Inventory").Misc) do
-	if startGifts ~= 0 and startLarge ~= 0 then break end
-	if v.id == "Gift Bag" then
-		startGifts = (v._am or 1)
-	elseif v.id == "Large Gift Bag" then
-		startLarge = (v._am or 1)
-	end
-end
-local startTime = os.time()
 function autoPopBalloon()
     local ReplicatedStorage = game:GetService("ReplicatedStorage")
     local hrp = player.Character.HumanoidRootPart
@@ -468,9 +437,7 @@ function autoPopBalloon()
 
         if allPopped then
             if config.Balloon.hopWhenNoBalloon then
-                print('No Balloon Pop!')
                 task.wait(config.Balloon.delayHopWhenNoBalloon)
-                sendNotif("```Bruh! Nothing Found xD ```")
                 loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/Misc/serverhop.lua"))()
             end
             task.wait(1)
@@ -482,14 +449,13 @@ function autoPopBalloon()
         
         hrp.Anchored = true
         for balloonId, balloonData in pairs(balloonIds) do
-            print("Popping balloon")
             local balloonPosition = balloonData.Position
             
             game:GetService("ReplicatedStorage").Network.Slingshot_Toggle:InvokeServer()
-            task.wait(0.5)
+            task.wait()
             hrp.CFrame = CFrame.new(balloonPosition.X, balloonPosition.Y + 30, balloonPosition.Z)
 
-            task.wait(1)
+            task.wait()
             local args = {
                 [1] = Vector3.new(balloonPosition.X, balloonPosition.Y + 25, balloonPosition.Z),
                 [2] = 0.5794160315249014,
@@ -504,35 +470,16 @@ function autoPopBalloon()
             ReplicatedStorage.Network.BalloonGifts_BalloonHit:FireServer(unpack(args))
             task.wait(0.2)
             ReplicatedStorage.Network.Slingshot_Unequip:InvokeServer()
-            print('balloon shot down')
             task.wait(0.5)
             hrp.CFrame = CFrame.new(balloonData.LandPosition)
-            print('waiting for drop')
             hrp.Anchored = false
             task.wait(2)
             
             hrp.Anchored = true
         end
-        local currentTime = os.time()
         if config.Balloon.hopWhenNoBalloon then
-            if not config.avoidCooldown or (config.avoidCooldown and currentTime - startTime >= config.Balloon.delayHopWhenNoBalloon) then
-                local endGifts = 0
-                local endLarge = 0 
-                for i,v in pairs(getInfo("Inventory").Misc) do
-                    if endGifts ~= 0 and endLarge ~= 0 then break end
-                    if v.id == "Gift Bag" then
-                        endGifts = (v._am or 1)
-                    elseif v.id == "Large Gift Bag" then
-                        endLarge = (v._am or 1)
-                    end
-                end
-                print('load webhook')
-                
-			    if getgenv().config.sendWebhook then
-                    sendNotif("```js\n[ "..player.Name.." húp ]\n‐ "..tostring(endGifts - startGifts).." Small > "..tostring(getTotalRAP((endGifts - startGifts) * SmallRAP)).." \n‐ "..tostring(endLarge - startLarge).." Large > "..tostring(getTotalRAP((endLarge - startLarge) * LargeRAP)).." \n\n[ Tổng trong túi / Máy chủ ]\n‐ "..tostring(endGifts).." Small > "..tostring(getTotalRAP(endGifts * SmallRAP)).." \n‐ "..tostring(endLarge).." Large > "..tostring(getTotalRAP(endLarge * LargeRAP)).." \n- Tốn "..tostring(currentTime - startTime).." giây \n- Có "..tostring(startBalloons).." bóng\n```")
-                end
-                repeat game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, getServer().id, player) task.wait(3) until not game.PlaceId
-            end
+           	task.wait(config.Balloon.delayHopWhenNoBalloon)
+		repeat game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, getServer().id, player) task.wait(3) until not game.PlaceId
         end
     end
 end

@@ -172,8 +172,6 @@ function autoClaimM()
 end
 -- Auto Balloon
 function autoPopBalloon()
-    print('Run balloon')
-
     while wait() and config.Balloon.Enabled do
         local balloonIds = {}
         local getActiveBalloons = ReplicatedStorage.Network.BalloonGifts_GetActiveBalloons:InvokeServer()
@@ -199,7 +197,6 @@ function autoPopBalloon()
         
         hrp.Anchored = true
         for balloonId, balloonData in pairs(balloonIds) do
-            print("Popping balloon")
             local balloonPosition = balloonData.Position
             
             game:GetService("ReplicatedStorage").Network.Slingshot_Toggle:InvokeServer()
@@ -223,14 +220,12 @@ function autoPopBalloon()
             ReplicatedStorage.Network.BalloonGifts_BalloonHit:FireServer(unpack(args))
             task.wait(0.2)
             ReplicatedStorage.Network.Slingshot_Unequip:InvokeServer()
-            print('balloon shot down')
             task.wait(0.5)
             hrp.CFrame = CFrame.new(balloonData.LandPosition)
-            print('waiting for drop')
             hrp.Anchored = false
             task.wait(1)
             hrp.Anchored = true
-            wait(1)
+            wait(0.2)
             if fps == getgenv().config.Balloon.balloonFpsBoost then
                 print('start boostfps')
                 pcall(function()
@@ -268,7 +263,6 @@ function autoPopBalloon()
                 game:GetService("RunService"):Set3dRenderingEnabled(false)
                 loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
                 fps = false
-                print('Done!')
             end
         end
         if config.Balloon.hopWhenNoBalloon then

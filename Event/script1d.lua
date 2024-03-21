@@ -6,7 +6,6 @@ if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
 
     if game.PlaceId == 8737899170 then 
         pcall(function()
-            
             for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
                 if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs"}, v.Name) then
                     v:Destroy()
@@ -19,7 +18,34 @@ if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
         
             game:GetService("Workspace"):WaitForChild("ALWAYS_RENDERING"):Destroy()
         
-        end)    
+        end)
+        for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
+            if v:IsA("ScreenGui") then
+                v.Enabled = false
+            end
+        end
+    
+        for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
+            if v:IsA("ScreenGui") then
+                v.Enabled = false
+            end
+        end
+    
+        
+        game:GetService("Lighting"):ClearAllChildren()
+        for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
+            v:Destroy()
+        end
+        for _, v in pairs(game:GetService("Players"):GetChildren()) do
+            if v.Name ~= game.Players.LocalPlayer.Name then
+                v:Destroy()
+            end
+        end
+        for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
+            v:Destroy()
+        end
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
     elseif game.PlaceId == 16498369169 then 
         pcall(function()
 
@@ -52,35 +78,36 @@ if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
             end
             
         end)
-    end
-
-    for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
-        if v:IsA("ScreenGui") then
-            v.Enabled = false
+        for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
+            if v:IsA("ScreenGui") then
+                v.Enabled = false
+            end
         end
-    end
-
-    for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
-        if v:IsA("ScreenGui") then
-            v.Enabled = false
+    
+        for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
+            if v:IsA("ScreenGui") then
+                v.Enabled = false
+            end
         end
+    
+        
+        game:GetService("Lighting"):ClearAllChildren()
+        for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
+            v:Destroy()
+        end
+        for _, v in pairs(game:GetService("Players"):GetChildren()) do
+            if v.Name ~= game.Players.LocalPlayer.Name then
+                v:Destroy()
+            end
+        end
+        for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
+            v:Destroy()
+        end
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
     end
 
     
-    game:GetService("Lighting"):ClearAllChildren()
-    for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
-        v:Destroy()
-    end
-    for _, v in pairs(game:GetService("Players"):GetChildren()) do
-        if v.Name ~= game.Players.LocalPlayer.Name then
-            v:Destroy()
-        end
-    end
-    for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
-        v:Destroy()
-    end
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
 end
 
 --//*--------- Load Game ---------*//--

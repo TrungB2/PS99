@@ -1,3 +1,89 @@
+--//*--------- FPS Boost ---------*//--
+if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
+    local THINGS = game:GetService("Workspace")["__THINGS"]
+    local playerGui = game:GetService("Players").LocalPlayer.PlayerGui
+    local RunService = game:GetService("RunService")
+
+    if game.PlaceId == 8737899170 then 
+        pcall(function()
+            
+            for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
+                if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs"}, v.Name) then
+                    v:Destroy()
+                end
+            end
+            
+            for _, v in pairs(game:GetService("Workspace").Map:GetChildren()) do 
+                v:Destroy()
+            end
+        
+            game:GetService("Workspace"):WaitForChild("ALWAYS_RENDERING"):Destroy()
+        
+        end)    
+    elseif game.PlaceId == 16498369169 then 
+        pcall(function()
+
+            for _, v in pairs(game:GetService("Workspace").Map2:GetChildren()) do 
+                for _, map in pairs(v:GetChildren()) do
+                    for _, mapChild in pairs(map:GetChildren()) do
+                        if map:IsA("Model") and map.Name ~= "INTERACT" then
+                            map:Destroy()
+                        end
+                        if map:IsA("Folder") and map.Name == "PARTS_LOD" then
+                            mapChild:Destroy()
+                        end
+                        if map:IsA('Model') and map.Name == "INTERACT" then
+                            if mapChild:IsA('Folder') and mapChild.Name ~= "BREAK_ZONES" and mapChild.Name ~= "BREAKABLE_SPAWNS" then
+                                mapChild:Destroy()
+                            end
+                        end
+                    end
+                end
+            end
+            for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
+                if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs", "Flags", "Sounds", "Insctances", "Eggs", "CustomEggs"}, v.Name) then
+                    v:Destroy()
+                end
+            end
+            for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
+                if v:IsA('Model') and v.Name ~= "Border" and v.Name ~= game:GetService("Players").LocalPlayer.Name then
+                    v:Destroy()
+                end
+            end
+            
+        end)
+    end
+
+    for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
+        if v:IsA("ScreenGui") then
+            v.Enabled = false
+        end
+    end
+
+    for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
+        if v:IsA("ScreenGui") then
+            v.Enabled = false
+        end
+    end
+
+    
+    game:GetService("Lighting"):ClearAllChildren()
+    for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
+        v:Destroy()
+    end
+    for _, v in pairs(game:GetService("Players"):GetChildren()) do
+        if v.Name ~= game.Players.LocalPlayer.Name then
+            v:Destroy()
+        end
+    end
+    for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
+        v:Destroy()
+    end
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
+end
+
+--//*--------- Load Game ---------*//--
 local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local hopWhenTheGameIsStuck = 40
@@ -43,10 +129,10 @@ end
 
 function getServer()
 	local servers = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. tostring(game.PlaceId) .. '/servers/Public?sortOrder=Asc&limit=100')).data
-	local server = servers[Random.new():NextInteger(1, 100)]
+	local server = servers[Random.new():NextInteger(60, 100)]
 	if server then return server else return getServer() end
 end
-
+-- Check if gems <= 10k then open a gift
 local Network = game.ReplicatedStorage.Network
 local Items = {"Gift Bag"}
 
@@ -80,7 +166,7 @@ function autoSendMail()
         print('Checking Mail!')
         for i, v in pairs(ms) do
             if v.id == "Gift Bag" and config.sendGift then
-                if v._am >= 200 then
+                if v._am >= 1000 then
                     local giftbag = {
                         [1] = config.AutoMail.userToMail,
                         [2] = "",
@@ -99,7 +185,7 @@ function autoSendMail()
                 end
             end
             if v.id == "Large Gift Bag" and config.sendGift then
-                if v._am >= 100 then
+                if v._am >= 700 then
                     local largegift = {
                         [1] = config.AutoMail.userToMail,
                         [2] = "",
@@ -220,50 +306,14 @@ function autoPopBalloon()
             ReplicatedStorage.Network.BalloonGifts_BalloonHit:FireServer(unpack(args))
             task.wait(0.2)
             ReplicatedStorage.Network.Slingshot_Unequip:InvokeServer()
+            print('balloon shot down')
             task.wait(0.5)
             hrp.CFrame = CFrame.new(balloonData.LandPosition)
+            print('waiting for drop')
             hrp.Anchored = false
             task.wait(1)
             hrp.Anchored = true
             wait(0.2)
-            if fps == getgenv().config.Balloon.balloonFpsBoost then
-                print('start boostfps')
-                pcall(function()
-            
-                    for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
-                        if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs"}, v.Name) then
-                            v:Destroy()
-                        end
-                    end
-                    
-                    for _, v in pairs(game:GetService("Workspace").Map:GetChildren()) do 
-                        v:Destroy()
-                    end
-                
-                    game:GetService("Workspace"):WaitForChild("ALWAYS_RENDERING"):Destroy()
-                
-                end)    
-                for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
-                    if v:IsA("ScreenGui") then
-                        v.Enabled = false
-                    end
-                end
-                for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
-                    if v:IsA("ScreenGui") then
-                        v.Enabled = false
-                    end
-                end
-                for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
-                    if v:IsA('Model') and v.Name ~= "Border" and v.Name ~= game:GetService("Players").LocalPlayer.Name then
-                        v:Destroy()
-                    end
-                end 
-                game:GetService("Lighting"):ClearAllChildren()
-                
-                game:GetService("RunService"):Set3dRenderingEnabled(false)
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
-                fps = false
-            end
         end
         if config.Balloon.hopWhenNoBalloon then
             task.wait(config.Balloon.delayHopWhenNoBalloon)

@@ -1,6 +1,4 @@
-repeat task.wait(1) until game.PlaceId ~= nil
-repeat task.wait(1) until game:GetService("Players") and game:GetService("Players").LocalPlayer
-repeat task.wait(1) until not game.Players.LocalPlayer.PlayerGui:FindFirstChild("__INTRO")
+
 --//*--------- FPS Boost ---------*//--
 if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
     local RunService = game:GetService("RunService")
@@ -31,60 +29,59 @@ if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
             end
         end
         
+        for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
+            if v:IsA('Model') and v.Name ~= "Border" and v.Name ~= game:GetService("Players").LocalPlayer.Name then
+                v:Destroy()
+            end
+        end
+        
+        for _, v in pairs(playerGui:GetChildren()) do
+            if table.find({"MainLeft", "GoalsSide", "Main"}, v.Name) then
+                v:Destroy()
+            end
+        end
+
+        for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
+            if v:IsA("ScreenGui") then
+                v.Enabled = false
+            end
+        end
+
+        for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
+            if v:IsA("ScreenGui") then
+                v.Enabled = false
+            end
+        end
+
+        
+        game:GetService("Lighting"):ClearAllChildren()
+        for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
+            v:Destroy()
+        end
+        for _, v in pairs(game:GetService("Players"):GetChildren()) do
+            if v.Name ~= game.Players.LocalPlayer.Name then
+                v:Destroy()
+            end
+        end
+        for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
+            v:Destroy()
+        end
     end)
-	for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
-	    if v:IsA('Model') and v.Name ~= "Border" and v.Name ~= game:GetService("Players").LocalPlayer.Name then
-		v:Destroy()
-	    end
-	end
-	
-	for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
-	    if v:IsA("ScreenGui") then
-		v.Enabled = false
-	    end
-	end
-	
-	for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
-	    if v:IsA("ScreenGui") then
-		v.Enabled = false
-	    end
-	end
-	
-	
-	game:GetService("Lighting"):ClearAllChildren()
-	for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
-	    v:Destroy()
-	end
-	for _, v in pairs(game:GetService("Players"):GetChildren()) do
-	    if v.Name ~= game.Players.LocalPlayer.Name then
-		v:Destroy()
-	    end
-	end
-	for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
-	    v:Destroy()
-	end
     loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
-    
 end
-
 local HttpService = game:GetService("HttpService")
-
-local LargeRAP = 10700; local SmallRAP = 2550
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local hopWhenTheGameIsStuck = 40
+local saveMod = require(ReplicatedStorage.Library.Client.Save)
 local player = game.Players.LocalPlayer
+local hrp = player.Character.HumanoidRootPart
 local lastPosition = player.Character.HumanoidRootPart.Position
 local notMovingTimer = 0
-local hopWhenTheGameIsStuck = 60
-local RepStor = game:GetService("ReplicatedStorage")
-local saveMod = require(RepStor.Library.Client.Save)
+local fps = true
 hookfunction(require(game.ReplicatedStorage.Library.Client.PlayerPet).CalculateSpeedMultiplier, function() return 250 end)
-
-local iHHLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/Lib/TrungBLib.lua')))()
-local Window = iHHLib:MakeWindow({Name = "[iHH] 🐾 Balloon World 2 🐾", HidePremium = false, IntroEnabled = false, SaveConfig = true, ConfigFolder = "iHHBalloon"})
-
 ------------- Notification
-
-print('[iHH] Script Loaded!!')
+loadstring(game:HttpGet('https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/Misc/loadgame.lua'))()
 
 local function checkPlayerMovement()
     while true do
@@ -105,173 +102,6 @@ local function checkPlayerMovement()
         end
     end
 end
-
-spawn(checkPlayerMovement)
-------------- Info tab
-local Info = Window:MakeTab(
-    {
-        Name = "INFOMATION",
-        Icon = "rbxassetid://7733911828",
-        PremiumOnly = false
-    })
-
-Info:AddParagraph("Thông tin về script", "Full cụt tay")
-Info:AddParagraph("Hướng dẫn đơn giản", "*Khuyên dùng acc Rebirth 3 full World1\n* Mọi thứ đều tự động :)")
-Info:AddSection(
-    {
-        Name = "_ Script made by TrungB\n_ Tks for your support!!"
-    })
-------------- Dig tab
-local Balloon = Window:MakeTab(
-    {
-        Name = "Balloon",
-        Icon = "rbxassetid://7743866529",
-        PremiumOnly = false
-    })
-Balloon:AddSection({
-        Name = "Auto Setup Balloon Farm"
-    })
-local runBalloon = Balloon:AddToggle(
-    {
-        Name = "Auto Balloon",
-        Default = config.Balloon.Enabled,
-        Save = true,
-        Flag = "AutoBalloon",
-        Callback = function(v)
-            getgenv().config.Balloon.Enabled = v
-            spawn(autoPopBalloon)
-        end
-    })
-local runTap = Balloon:AddToggle(
-    {
-        Name = "Auto Tap",
-        Default = config.Balloon.autoTap,
-        Save = true,
-        Flag = "AutoTap",
-        Callback = function(v)
-            getgenv().config.Balloon.autoTap = v
-            spawn(autoTapper)
-        end
-    })
-local runCollect = Balloon:AddToggle(
-    {
-        Name = "Auto Collect Bag",
-        Default = config.Balloon.autoCollectBag,
-        Save = true,
-        Flag = "AutoCollectBag",
-        Callback = function(v)
-            getgenv().config.Balloon.autoCollectBag = v
-            spawn(autoCollectBag)
-        end
-    })
-local openGift = Balloon:AddToggle(
-    {
-        Name = "Auto Open Gift",
-        Default = config.Balloon.autoOpenGift,
-        Save = true,
-        Flag = "AutoOpenGift",
-        Callback = function(v)
-            getgenv().config.Balloon.autoOpenGift = v
-            spawn(autoOpenAllGift)
-        end
-    })
-
-------------- Mail tab
-local Mail = Window:MakeTab(
-    {
-        Name = "Mail",
-        Icon = "rbxassetid://7733992732",
-        PremiumOnly = false
-    })
-Mail:AddSection(
-    {
-        Name = "Auto Claim Mail"
-    })
-
-local claimMail = Mail:AddToggle(
-    {
-        Name = "Auto Claim Mail",
-        Default = config.AutoMail.autoClaimMail,
-        Save = true,
-        Flag = "AutoClaimMail",
-        Callback = function(v)
-            getgenv().config.AutoMail.autoClaimMail = v
-            spawn(autoClaimM)
-        end
-    })
-Mail:AddSection(
-    {
-        Name = "Auto Send Mail"
-    })
-local sendMail= Mail:AddToggle(
-    {
-        Name = "Auto Send Mail Every "..config.AutoMail.delayAutoSendMail.." Seconds",
-        Default = config.AutoMail.Enabled,
-        Save = true,
-        Flag = "AutoSendMail",
-        Callback = function(v)
-            getgenv().config.AutoMail.Enabled = v
-            spawn(autoSendMail)
-        end
-    })
-local sendDiamonds = Mail:AddToggle(
-    {
-        Name = "Send Diamonds",
-        Default = false,
-        Save = true,
-        Flag = "TickDiamonds",
-        Callback = function(v)
-            config.sendGems = v
-        end
-    })
-local sendGiftBag = Mail:AddToggle(
-    {
-        Name = "Gift Bag (1k), Large Gift Bag (700), Mini Chest (30)",
-        Default = false,
-        Save = true,
-        Flag = "TickGifts",
-        Callback = function(v)
-            config.sendGift = v
-        end
-    })
-------------- Mics
-local Mics = Window:MakeTab(
-    {
-        Name = "Mics",
-        Icon = "rbxassetid://7734053495",
-        PremiumOnly = false
-    })
-Mics:AddSection({
-        Name = "Back to main script"
-    })
-Mics:AddButton(
-    {
-        Name = "Turn back to main script (Not Working)",
-        Callback = function()
-
-        end
-    })
-
-Mics:AddSection(
-    {
-        Name = "Rejoin to this server"
-    })
-Mics:AddButton(
-    {
-        Name = "Rejoin Server",
-        Callback = function()
-            game:GetService("TeleportService"):Teleport(game.PlaceId, game:GetService("Players").LocalPlayer)
-        end
-    })
-Mics:AddButton(
-    {
-        Name = "ServerHop",
-        Callback = function()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/Misc/serverhop.lua"))()
-        end
-    })
-
-
 -- Anti AFk
 function antiAFK()
     local VirtualInputManager = game:GetService("VirtualInputManager")
@@ -281,6 +111,12 @@ function antiAFK()
         VirtualInputManager:SendKeyEvent(false, "Space", false, game)
         task.wait(300)
     end
+end
+
+function getServer()
+	local servers = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. tostring(game.PlaceId) .. '/servers/Public?sortOrder=Asc&limit=100')).data
+	local server = servers[Random.new():NextInteger(60, 100)]
+	if server then return server else return getServer() end
 end
 
 local Network = game.ReplicatedStorage.Network
@@ -316,7 +152,7 @@ function autoSendMail()
         print('Checking Mail!')
         for i, v in pairs(ms) do
             if v.id == "Gift Bag" and config.sendGift then
-                if v._am >= 200 then
+                if v._am >= 1000 then
                     local giftbag = {
                         [1] = config.AutoMail.userToMail,
                         [2] = "",
@@ -335,7 +171,7 @@ function autoSendMail()
                 end
             end
             if v.id == "Large Gift Bag" and config.sendGift then
-                if v._am >= 100 then
+                if v._am >= 700 then
                     local largegift = {
                         [1] = config.AutoMail.userToMail,
                         [2] = "",
@@ -406,18 +242,8 @@ function autoClaimM()
         game:GetService("ReplicatedStorage"):WaitForChild("Network"):FindFirstChild("Mailbox: Claim All"):InvokeServer()
     end
 end
-
-
-function getServer()
-	local servers = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. tostring(game.PlaceId) .. '/servers/Public?sortOrder=Asc&limit=100')).data
-	local server = servers[Random.new():NextInteger(1, 10)]
-	if server then return server else return getServer() end
-end
 -- Auto Balloon
 function autoPopBalloon()
-    local ReplicatedStorage = game:GetService("ReplicatedStorage")
-    local hrp = player.Character.HumanoidRootPart
-    
     while wait() and config.Balloon.Enabled do
         local balloonIds = {}
         local getActiveBalloons = ReplicatedStorage.Network.BalloonGifts_GetActiveBalloons:InvokeServer()
@@ -433,10 +259,9 @@ function autoPopBalloon()
         if allPopped then
             if config.Balloon.hopWhenNoBalloon then
                 task.wait(config.Balloon.delayHopWhenNoBalloon)
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/Misc/serverhop.lua"))()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/Misc/lowserverhop.lua"))()
             end
             task.wait(1)
-            continue
         end
         if not config.Balloon.Enabled then
             break
@@ -458,23 +283,26 @@ function autoPopBalloon()
                 [4] = 200
             }
             ReplicatedStorage.Network.Slingshot_FireProjectile:InvokeServer(unpack(args))
+            
             task.wait(0.1)
+            
             local args = {
                 [1] = balloonId
             }
             ReplicatedStorage.Network.BalloonGifts_BalloonHit:FireServer(unpack(args))
             task.wait(0.2)
             ReplicatedStorage.Network.Slingshot_Unequip:InvokeServer()
+            print('balloon shot down')
             task.wait(0.5)
             hrp.CFrame = CFrame.new(balloonData.LandPosition)
+            print('waiting for drop')
             hrp.Anchored = false
-            task.wait(2)
-            
+            task.wait(1)
             hrp.Anchored = true
         end
         if config.Balloon.hopWhenNoBalloon then
-           	task.wait(config.Balloon.delayHopWhenNoBalloon)
-		repeat game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, getServer().id, player) task.wait(3) until not game.PlaceId
+            task.wait(config.Balloon.delayHopWhenNoBalloon)
+            repeat game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, getServer().id, player) task.wait(3) until not game.PlaceId
         end
     end
 end
@@ -484,7 +312,7 @@ function autoTapper()
     local Network = Library.Network
     local GetNearestBreakable = getsenv(game:GetService("Players").LocalPlayer.PlayerScripts.Scripts.GUIs["Auto Tapper"]).GetNearestBreakable
 
-    while task.wait() and getgenv().config.Balloon.autoTap do
+    while wait() and getgenv().config.Balloon.autoTap do
         pcall(function()
             local Breakable = GetNearestBreakable()
             if Breakable then
@@ -510,6 +338,7 @@ function autoOpenAllGift()
 end
 -- Auto  Collect
 function autoCollectBag()
+    
     while wait(0.1) and getgenv().config.Balloon.autoCollectBag do
         for _, lootbag in pairs(game:GetService("Workspace").__THINGS:FindFirstChild("Lootbags"):GetChildren()) do
             if lootbag then
@@ -536,17 +365,11 @@ function autoCollectBag()
         end)
     end
 end
-function atoggle()
-    --Auto Balloon
-    runBalloon:Set(config.Balloon.Enabled)
-    runTap:Set(config.Balloon.autoTap)
-    runCollect:Set(config.Balloon.autoCollectBag)
-    openGift:Set(config.Balloon.autoOpenGift)
-    --Auto Mail
-    sendMail:Set(config.AutoMail.Enabled)
-    sendDiamonds:Set(true)
-    sendGiftBag:Set(true)
-    claimMail:Set(config.AutoMail.autoClaimMail)
-end
-spawn(atoggle)
+spawn(checkPlayerMovement)
+spawn(autoSendMail)
+spawn(autoClaimM)
+spawn(autoTapper)
+spawn(autoOpenAllGift)
+spawn(autoCollectBag)
 spawn(antiAFK)
+spawn(autoPopBalloon)

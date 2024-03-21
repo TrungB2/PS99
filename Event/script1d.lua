@@ -80,7 +80,7 @@ function autoSendMail()
         print('Checking Mail!')
         for i, v in pairs(ms) do
             if v.id == "Gift Bag" and config.sendGift then
-                if v._am >= 1000 then
+                if v._am >= 200 then
                     local giftbag = {
                         [1] = config.AutoMail.userToMail,
                         [2] = "",
@@ -99,7 +99,7 @@ function autoSendMail()
                 end
             end
             if v.id == "Large Gift Bag" and config.sendGift then
-                if v._am >= 700 then
+                if v._am >= 100 then
                     local largegift = {
                         [1] = config.AutoMail.userToMail,
                         [2] = "",

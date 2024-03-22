@@ -5,107 +5,107 @@ if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
     local RunService = game:GetService("RunService")
 
     if game.PlaceId == 8737899170 then 
-            pcall(function()
-                for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
-                    if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs"}, v.Name) then
-                        v:Destroy()
-                    end
-                end
-                
-                for _, v in pairs(game:GetService("Workspace").Map:GetChildren()) do 
-                    v:Destroy()
-                end
-            
-                game:GetService("Workspace"):WaitForChild("ALWAYS_RENDERING"):Destroy()
-            
-            end)
-            for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
-                if v:IsA("ScreenGui") then
-                    v.Enabled = false
-                end
-            end
-        
-            for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
-                if v:IsA("ScreenGui") then
-                    v.Enabled = false
-                end
-            end
-        
-            
-            game:GetService("Lighting"):ClearAllChildren()
-            for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
-                v:Destroy()
-            end
-            for _, v in pairs(game:GetService("Players"):GetChildren()) do
-                if v.Name ~= game.Players.LocalPlayer.Name then
+        pcall(function()
+            for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
+                if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs"}, v.Name) then
                     v:Destroy()
                 end
             end
-            for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
+            
+            for _, v in pairs(game:GetService("Workspace").Map:GetChildren()) do 
                 v:Destroy()
             end
-	    game:GetService("RunService"):Set3dRenderingEnabled(false)
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
+        
+            game:GetService("Workspace"):WaitForChild("ALWAYS_RENDERING"):Destroy()
+        
+        end)
+        for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
+            if v:IsA("ScreenGui") then
+                v.Enabled = false
+            end
+        end
+    
+        for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
+            if v:IsA("ScreenGui") then
+                v.Enabled = false
+            end
+        end
+    
+        
+        game:GetService("Lighting"):ClearAllChildren()
+        for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
+            v:Destroy()
+        end
+        for _, v in pairs(game:GetService("Players"):GetChildren()) do
+            if v.Name ~= game.Players.LocalPlayer.Name then
+                v:Destroy()
+            end
+        end
+        for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
+            v:Destroy()
+        end
+        game:GetService("RunService"):Set3dRenderingEnabled(false)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
     elseif game.PlaceId == 16498369169 then 
-            pcall(function()
-                for _, v in pairs(game:GetService("Workspace").Map2:GetChildren()) do 
-                    for _, map in pairs(v:GetChildren()) do
-                        for _, mapChild in pairs(map:GetChildren()) do
-                            if map:IsA("Model") and map.Name ~= "INTERACT" then
-                                map:Destroy()
-                            end
-                            if map:IsA("Folder") and map.Name == "PARTS_LOD" then
+        pcall(function()
+            for _, v in pairs(game:GetService("Workspace").Map2:GetChildren()) do 
+                for _, map in pairs(v:GetChildren()) do
+                    for _, mapChild in pairs(map:GetChildren()) do
+                        if map:IsA("Model") and map.Name ~= "INTERACT" then
+                            map:Destroy()
+                        end
+                        if map:IsA("Folder") and map.Name == "PARTS_LOD" then
+                            mapChild:Destroy()
+                        end
+                        if map:IsA('Model') and map.Name == "INTERACT" then
+                            if mapChild:IsA('Folder') and mapChild.Name ~= "BREAK_ZONES" and mapChild.Name ~= "BREAKABLE_SPAWNS" then
                                 mapChild:Destroy()
-                            end
-                            if map:IsA('Model') and map.Name == "INTERACT" then
-                                if mapChild:IsA('Folder') and mapChild.Name ~= "BREAK_ZONES" and mapChild.Name ~= "BREAKABLE_SPAWNS" then
-                                    mapChild:Destroy()
-                                end
                             end
                         end
                     end
                 end
-                for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
-                    if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs", "Flags", "Sounds", "Insctances", "Eggs", "CustomEggs"}, v.Name) then
-                        v:Destroy()
-                    end
-                end
-                for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
-                    if v:IsA('Model') and v.Name ~= "Border" and v.Name ~= game:GetService("Players").LocalPlayer.Name then
-                        v:Destroy()
-                    end
-                end
-                
-            end)
-            for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
-                if v:IsA("ScreenGui") then
-                    v.Enabled = false
-                end
             end
-        
-            for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
-                if v:IsA("ScreenGui") then
-                    v.Enabled = false
-                end
-            end
-        
-            
-            game:GetService("Lighting"):ClearAllChildren()
-            for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
-                v:Destroy()
-            end
-            for _, v in pairs(game:GetService("Players"):GetChildren()) do
-                if v.Name ~= game.Players.LocalPlayer.Name then
+            for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
+                if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs", "Flags", "Sounds", "Insctances", "Eggs", "CustomEggs"}, v.Name) then
                     v:Destroy()
                 end
             end
-            for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
+            for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
+                if v:IsA('Model') and v.Name ~= "Border" and v.Name ~= game:GetService("Players").LocalPlayer.Name then
+                    v:Destroy()
+                end
+            end
+            
+        end)
+        for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
+            if v:IsA("ScreenGui") then
+                v.Enabled = false
+            end
+        end
+    
+        for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
+            if v:IsA("ScreenGui") then
+                v.Enabled = false
+            end
+        end
+    
+        
+        game:GetService("Lighting"):ClearAllChildren()
+        for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
+            v:Destroy()
+        end
+        for _, v in pairs(game:GetService("Players"):GetChildren()) do
+            if v.Name ~= game.Players.LocalPlayer.Name then
                 v:Destroy()
             end
-	    game:GetService("RunService"):Set3dRenderingEnabled(false)
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
-            loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
+        end
+        for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
+            v:Destroy()
+        end
+        game:GetService("RunService"):Set3dRenderingEnabled(false)
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
     end
 end
 --//*--------- Load Game ---------*//--
@@ -153,7 +153,7 @@ end
 
 function getServer()
 	local servers = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. tostring(game.PlaceId) .. '/servers/Public?sortOrder=Asc&limit=100')).data
-	local server = servers[Random.new():NextInteger(1, 100)]
+	local server = servers[Random.new():NextInteger(60, 100)]
 	if server then return server else return getServer() end
 end
 -- Check if gems <= 10k then open a gift

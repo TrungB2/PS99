@@ -37,7 +37,6 @@ if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
     local RunService = game:GetService("RunService")
 
     if game.PlaceId == 8737899170 then 
-        if getgenv().config.Balloon.World2 == false then
             pcall(function()
                 for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
                     if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs"}, v.Name) then
@@ -79,12 +78,8 @@ if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
             end
             loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
-        else
-            game.ReplicatedStorage.Network.World2Teleport:InvokeServer()
-        end
         print('World 1')
     elseif game.PlaceId == 16498369169 then 
-        if getgenv().config.Balloon.World2 == true then
             pcall(function()
                 for _, v in pairs(game:GetService("Workspace").Map2:GetChildren()) do 
                     for _, map in pairs(v:GetChildren()) do
@@ -142,9 +137,6 @@ if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
             end
             loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
-        else
-            game.ReplicatedStorage.Network.World1Teleport:InvokeServer()
-        end
         print('World 2')
     end
 end

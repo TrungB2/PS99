@@ -159,7 +159,7 @@ function getServer()
 	local server = servers[Random.new():NextInteger(60, 100)]
 	if server then return server else return getServer() end
 end
--- Check if gems <= 10k then open a gift
+-- Check if gems <= 20k then open a gift
 local Network = game.ReplicatedStorage.Network
 local Items = {"Gift Bag"}
 
@@ -172,7 +172,7 @@ end
 
 for i, v in pairs(GetSave().Inventory.Currency) do
     if v.id == "Diamonds" then
-        if v._am <= 10000 then
+        if v._am <= 20000 then
             while wait() do
                 for i,gift in pairs(Items) do
                     autoOpen(gift)

@@ -11,7 +11,6 @@ local ItemsPS99 = {
 }
 
 wait(20)
-game:GetService("RunService"):Set3dRenderingEnabled(false)
 local Booths_Broadcast = game:GetService("ReplicatedStorage").Network:WaitForChild("Booths_Broadcast")
 local Players = game:GetService('Players')
 local Player = Players.LocalPlayer

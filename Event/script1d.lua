@@ -122,7 +122,7 @@ local notMovingTimer = 0
 local fps = true
 hookfunction(require(game.ReplicatedStorage.Library.Client.PlayerPet).CalculateSpeedMultiplier, function() return 250 end)
 ------------- Notification
-loadstring(game:HttpGet('https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/Misc/loadgame.lua'))()
+--loadstring(game:HttpGet('https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/Misc/loadgame.lua'))()
 
 local function checkPlayerMovement()
     while true do

@@ -3,7 +3,7 @@ repeat task.wait(1) until game:IsLoaded()
 
 
 print("booty works V8")
---// loadstring(game:HttpGet(''))()
+--// loadstring(game:HttpGet('https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/StillSkid-ForReal/snip.lua'))()
 
 --PS99 ITEMS
 local ItemsPS99 = {

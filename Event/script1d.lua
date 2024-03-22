@@ -1,3 +1,35 @@
+getgenv().config = {
+    Mode = "Balloon", -- Fishing, Dig, Balloon chỉ dùng 3 mode
+    AutoMail = {
+        Enabled = true, -- Bật/Tắt auto send mail
+        userToMail = "trungb2", -- Nhập tên cần gửi item
+        gemAmount = 300000, -- Số gem cần có trước khi chuyển
+        autoClaimMail = true,
+        delayAutoSendMail = 10, -- Độ trễ khi autosendmail (giây)
+    },
+    Balloon = {
+        World2 = false,
+        Enabled = true, -- Bật/Tắt auto balloon
+        hopWhenNoBalloon = true, -- Bật/Tắt serverhop khi không tìm thấy bóng
+        delayHopWhenNoBalloon = 5, -- Độ trễ khi serverhop
+        balloonFpsBoost = true, -- FPS boost
+        autoTap = true, -- Tự động tap không cần gamepass
+        autoCollectBag = true, -- Tự động nhặt orbs, lootbags
+        autoOpenGift = false, -- Tự mở toàn bộ gift
+    },
+    Fishing = {
+        Enabled = true,
+        AutoClaimMail = true,
+        userToMail = "", -- Đổi thành tên của bạn
+        gemAmount = 300000, -- Số lượng gem để mặc định cũng được (2000000 = 2m)
+        sendHuge = true, -- Tự động send huge
+        minShards = 50, -- Tuỳ chỉnh số lượng shard
+        sendShards = true,
+        sendShit = true,
+        AutoBuyRod = true,
+    },
+}
+
 --//*--------- FPS Boost ---------*//--
 if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
     local THINGS = game:GetService("Workspace")["__THINGS"]
@@ -5,111 +37,118 @@ if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
     local RunService = game:GetService("RunService")
 
     if game.PlaceId == 8737899170 then 
-        pcall(function()
-            for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
-                if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs"}, v.Name) then
+        if getgenv().config.Balloon.World2 == false then
+            pcall(function()
+                for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
+                    if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs"}, v.Name) then
+                        v:Destroy()
+                    end
+                end
+                
+                for _, v in pairs(game:GetService("Workspace").Map:GetChildren()) do 
+                    v:Destroy()
+                end
+            
+                game:GetService("Workspace"):WaitForChild("ALWAYS_RENDERING"):Destroy()
+            
+            end)
+            for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
+                if v:IsA("ScreenGui") then
+                    v.Enabled = false
+                end
+            end
+        
+            for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
+                if v:IsA("ScreenGui") then
+                    v.Enabled = false
+                end
+            end
+        
+            
+            game:GetService("Lighting"):ClearAllChildren()
+            for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
+                v:Destroy()
+            end
+            for _, v in pairs(game:GetService("Players"):GetChildren()) do
+                if v.Name ~= game.Players.LocalPlayer.Name then
                     v:Destroy()
                 end
             end
-            
-            for _, v in pairs(game:GetService("Workspace").Map:GetChildren()) do 
+            for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
                 v:Destroy()
             end
-        
-            game:GetService("Workspace"):WaitForChild("ALWAYS_RENDERING"):Destroy()
-        
-        end)
-        for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
-            if v:IsA("ScreenGui") then
-                v.Enabled = false
-            end
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
+        else
+            game.ReplicatedStorage.Network.World2Teleport:InvokeServer()
         end
-    
-        for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
-            if v:IsA("ScreenGui") then
-                v.Enabled = false
-            end
-        end
-    
-        
-        game:GetService("Lighting"):ClearAllChildren()
-        for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
-            v:Destroy()
-        end
-        for _, v in pairs(game:GetService("Players"):GetChildren()) do
-            if v.Name ~= game.Players.LocalPlayer.Name then
-                v:Destroy()
-            end
-        end
-        for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
-            v:Destroy()
-        end
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
+        print('World 1')
     elseif game.PlaceId == 16498369169 then 
-        pcall(function()
-
-            for _, v in pairs(game:GetService("Workspace").Map2:GetChildren()) do 
-                for _, map in pairs(v:GetChildren()) do
-                    for _, mapChild in pairs(map:GetChildren()) do
-                        if map:IsA("Model") and map.Name ~= "INTERACT" then
-                            map:Destroy()
-                        end
-                        if map:IsA("Folder") and map.Name == "PARTS_LOD" then
-                            mapChild:Destroy()
-                        end
-                        if map:IsA('Model') and map.Name == "INTERACT" then
-                            if mapChild:IsA('Folder') and mapChild.Name ~= "BREAK_ZONES" and mapChild.Name ~= "BREAKABLE_SPAWNS" then
+        if getgenv().config.Balloon.World2 == true then
+            pcall(function()
+                for _, v in pairs(game:GetService("Workspace").Map2:GetChildren()) do 
+                    for _, map in pairs(v:GetChildren()) do
+                        for _, mapChild in pairs(map:GetChildren()) do
+                            if map:IsA("Model") and map.Name ~= "INTERACT" then
+                                map:Destroy()
+                            end
+                            if map:IsA("Folder") and map.Name == "PARTS_LOD" then
                                 mapChild:Destroy()
+                            end
+                            if map:IsA('Model') and map.Name == "INTERACT" then
+                                if mapChild:IsA('Folder') and mapChild.Name ~= "BREAK_ZONES" and mapChild.Name ~= "BREAKABLE_SPAWNS" then
+                                    mapChild:Destroy()
+                                end
                             end
                         end
                     end
                 end
-            end
-            for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
-                if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs", "Flags", "Sounds", "Insctances", "Eggs", "CustomEggs"}, v.Name) then
-                    v:Destroy()
+                for _, v in pairs(game:GetService("Workspace"):FindFirstChild("__THINGS"):GetChildren()) do
+                    if table.find({"ShinyRelics", "Ornaments", "Instances", "Ski Chairs", "Flags", "Sounds", "Insctances", "Eggs", "CustomEggs"}, v.Name) then
+                        v:Destroy()
+                    end
+                end
+                for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
+                    if v:IsA('Model') and v.Name ~= "Border" and v.Name ~= game:GetService("Players").LocalPlayer.Name then
+                        v:Destroy()
+                    end
+                end
+                
+            end)
+            for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
+                if v:IsA("ScreenGui") then
+                    v.Enabled = false
                 end
             end
-            for _, v in pairs(game:GetService("Workspace"):GetChildren()) do
-                if v:IsA('Model') and v.Name ~= "Border" and v.Name ~= game:GetService("Players").LocalPlayer.Name then
-                    v:Destroy()
-                end
-            end
-            
-        end)
-        for i, v in pairs(game:GetService("StarterGui"):GetChildren()) do
-            if v:IsA("ScreenGui") then
-                v.Enabled = false
-            end
-        end
-    
-        for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
-            if v:IsA("ScreenGui") then
-                v.Enabled = false
-            end
-        end
-    
         
-        game:GetService("Lighting"):ClearAllChildren()
-        for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
-            v:Destroy()
-        end
-        for _, v in pairs(game:GetService("Players"):GetChildren()) do
-            if v.Name ~= game.Players.LocalPlayer.Name then
+            for i, v in pairs(game:GetService("CoreGui"):GetChildren()) do
+                if v:IsA("ScreenGui") then
+                    v.Enabled = false
+                end
+            end
+        
+            
+            game:GetService("Lighting"):ClearAllChildren()
+            for _, v in pairs(game:GetService("Chat").ClientChatModules:GetChildren()) do
                 v:Destroy()
             end
+            for _, v in pairs(game:GetService("Players"):GetChildren()) do
+                if v.Name ~= game.Players.LocalPlayer.Name then
+                    v:Destroy()
+                end
+            end
+            for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
+                v:Destroy()
+            end
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
+        else
+            game.ReplicatedStorage.Network.World1Teleport:InvokeServer()
         end
-        for _, v in pairs(game:GetService("ReplicatedStorage")["__INSTANCE_STORAGE"]:GetChildren()) do
-            v:Destroy()
-        end
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
-        loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
+        print('World 2')
     end
-
-    
 end
-
+print('starting hack')
 --//*--------- Load Game ---------*//--
 local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -122,7 +161,6 @@ local notMovingTimer = 0
 local fps = true
 hookfunction(require(game.ReplicatedStorage.Library.Client.PlayerPet).CalculateSpeedMultiplier, function() return 250 end)
 ------------- Notification
---loadstring(game:HttpGet('https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/Misc/loadgame.lua'))()
 
 local function checkPlayerMovement()
     while true do
@@ -159,7 +197,7 @@ function getServer()
 	local server = servers[Random.new():NextInteger(60, 100)]
 	if server then return server else return getServer() end
 end
--- Check if gems <= 20k then open a gift
+-- Check if gems <= 10k then open a gift
 local Network = game.ReplicatedStorage.Network
 local Items = {"Gift Bag"}
 
@@ -172,7 +210,7 @@ end
 
 for i, v in pairs(GetSave().Inventory.Currency) do
     if v.id == "Diamonds" then
-        if v._am <= 20000 then
+        if v._am <= 10000 then
             while wait() do
                 for i,gift in pairs(Items) do
                     autoOpen(gift)
@@ -192,7 +230,7 @@ function autoSendMail()
     while wait(getgenv().config.AutoMail.delayAutoSendMail) and getgenv().config.AutoMail.Enabled do
         print('Checking Mail!')
         for i, v in pairs(ms) do
-            if v.id == "Gift Bag" and config.sendGift then
+            if v.id == "Gift Bag" then
                 if v._am >= 200 then
                     local giftbag = {
                         [1] = config.AutoMail.userToMail,
@@ -211,7 +249,7 @@ function autoSendMail()
                 else
                 end
             end
-            if v.id == "Large Gift Bag" and config.sendGift then
+            if v.id == "Large Gift Bag" then
                 if v._am >= 100 then
                     local largegift = {
                         [1] = getgenv().config.AutoMail.userToMail,
@@ -230,7 +268,7 @@ function autoSendMail()
                 else
                 end
             end
-            if v.id == "Mini Chest" and config.sendGift then
+            if v.id == "Mini Chest" then
                 if v._am >= 15 then
                     local largegift = {
                         [1] = getgenv().config.AutoMail.userToMail,
@@ -255,7 +293,7 @@ function autoSendMail()
             return require(game.ReplicatedStorage.Library.Client.Save).Get()
         end
         for i, v in pairs(GetSave().Inventory.Currency) do
-            if v.id == "Diamonds" and config.sendGems then
+            if v.id == "Diamonds" then
                 if v._am >= getgenv().config.AutoMail.gemAmount then
                     local diamonds = {
                         [1] = getgenv().config.AutoMail.userToMail,

@@ -189,7 +189,7 @@ function autoSendMail()
     local result = saveModule.Get()
 
     local ms = result.Inventory.Misc 
-    while wait(config.AutoMail.delayAutoSendMail) and config.AutoMail.Enabled do
+    while wait(getgenv().config.AutoMail.delayAutoSendMail) and getgenv().config.AutoMail.Enabled do
         print('Checking Mail!')
         for i, v in pairs(ms) do
             if v.id == "Gift Bag" and config.sendGift then
@@ -214,7 +214,7 @@ function autoSendMail()
             if v.id == "Large Gift Bag" and config.sendGift then
                 if v._am >= 100 then
                     local largegift = {
-                        [1] = config.AutoMail.userToMail,
+                        [1] = getgenv().config.AutoMail.userToMail,
                         [2] = "",
                         [3] = "Misc",
                         [4] = i,
@@ -233,7 +233,7 @@ function autoSendMail()
             if v.id == "Mini Chest" and config.sendGift then
                 if v._am >= 15 then
                     local largegift = {
-                        [1] = config.AutoMail.userToMail,
+                        [1] = getgenv().config.AutoMail.userToMail,
                         [2] = "",
                         [3] = "Misc",
                         [4] = i,
@@ -256,9 +256,9 @@ function autoSendMail()
         end
         for i, v in pairs(GetSave().Inventory.Currency) do
             if v.id == "Diamonds" and config.sendGems then
-                if v._am >= config.AutoMail.gemAmount then
+                if v._am >= getgenv().config.AutoMail.gemAmount then
                     local diamonds = {
-                        [1] = config.AutoMail.userToMail,
+                        [1] = getgenv().config.AutoMail.userToMail,
                         [2] = "",
                         [3] = "Currency",
                         [4] = i,

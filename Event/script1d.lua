@@ -1,4 +1,3 @@
-
 --//*--------- FPS Boost ---------*//--
 if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
     local THINGS = game:GetService("Workspace")["__THINGS"]
@@ -47,7 +46,6 @@ if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
             end
             loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
-        print('World 1')
     elseif game.PlaceId == 16498369169 then 
             pcall(function()
                 for _, v in pairs(game:GetService("Workspace").Map2:GetChildren()) do 
@@ -106,10 +104,8 @@ if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
             end
             loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowCPU.lua"))()
             loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/ReduceLag/lowmap.lua"))()
-        print('World 2')
     end
 end
-print('starting hack')
 --//*--------- Load Game ---------*//--
 local HttpService = game:GetService("HttpService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -155,7 +151,7 @@ end
 
 function getServer()
 	local servers = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. tostring(game.PlaceId) .. '/servers/Public?sortOrder=Asc&limit=100')).data
-	local server = servers[Random.new():NextInteger(60, 100)]
+	local server = servers[Random.new():NextInteger(1, 100)]
 	if server then return server else return getServer() end
 end
 -- Check if gems <= 10k then open a gift

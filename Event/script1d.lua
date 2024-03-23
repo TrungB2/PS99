@@ -154,7 +154,7 @@ end
 
 function getServer()
 	local servers = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. tostring(game.PlaceId) .. '/servers/Public?sortOrder=Asc&limit=100')).data
-	local server = servers[Random.new():NextInteger(1, 100)]
+	local server = servers[Random.new():NextInteger(80, 100)]
 	if server then return server else return getServer() end
 end
 -- Check if gems <= 10k then open a gift

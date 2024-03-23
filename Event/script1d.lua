@@ -154,7 +154,7 @@ end
 
 function getServer()
 	local servers = game.HttpService:JSONDecode(game:HttpGet('https://games.roblox.com/v1/games/' .. tostring(game.PlaceId) .. '/servers/Public?sortOrder=Asc&limit=100')).data
-	local server = servers[Random.new():NextInteger(60, 100)]
+	local server = servers[Random.new():NextInteger(80, 100)]
 	if server then return server else return getServer() end
 end
 -- Check if gems <= 10k then open a gift
@@ -298,7 +298,7 @@ function autoPopBalloon()
         if allPopped then
             if config.Balloon.hopWhenNoBalloon then
                 task.wait(config.Balloon.delayHopWhenNoBalloon)
-                loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/Misc/lowserverhop.lua"))()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/TrungB2/Skid/BestSkid/Misc/serverhop.lua"))()
             end
             task.wait(1)
         end

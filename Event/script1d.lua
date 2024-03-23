@@ -1,3 +1,4 @@
+repeat task.wait(1) until game:IsLoaded()
 --//*--------- FPS Boost ---------*//--
 if game:IsLoaded() and getgenv().config.Balloon.balloonFpsBoost then
     local THINGS = game:GetService("Workspace")["__THINGS"]

@@ -72,4 +72,3 @@ w.DescendantAdded:Connect(function(v)
         v[v.ClassName.."Template"]=1
             end
         end)
-print("Executed LowCPU")
